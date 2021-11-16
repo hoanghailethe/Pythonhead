@@ -39,7 +39,7 @@ class Solution:
             perimeter -= 1
         return perimeter
 
-# better and faster No need DFS:
+    # better and faster No need DFS:
     #  Runtime: 460 ms, faster than 95.97% of Python3
     def islandPerimeter2(self, grid):
         """
@@ -60,7 +60,7 @@ class Solution:
         return p
 
 
-# python DFS
+    # python DFS
     # Runtime: 648 ms, faster than 51.80% of Python3
     # Memory Usage: 29.2 MB, less than 5.00%
     def islandPerimeter3(self, grid: List[List[int]]) -> int:
