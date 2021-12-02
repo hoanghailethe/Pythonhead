@@ -71,4 +71,4 @@ class Solution:
                 max_length = length
                 #  [DEBUG:]   print(long_sub, length, max_length)
 
-            return max_length
+        return max_length
