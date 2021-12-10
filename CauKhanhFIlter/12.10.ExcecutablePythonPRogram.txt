@@ -1,0 +1,9 @@
+https://stackoverflow.com/questions/53798660/pyinstaller-command-not-found
+
+27
+
+You can use the following command if you do not want to create additional python file.
+
+python -m PyInstaller myscript.py
+
+
