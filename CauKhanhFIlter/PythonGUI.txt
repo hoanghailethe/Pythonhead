@@ -1,8 +1,13 @@
+https://www.youtube.com/watch?v=HGOBQPFzWKo
+Intermediate Python Programming Course
+
+
 https://www.youtube.com/watch?v=H71ts4XxWYU
 #PythonTutorial #PythonProgramming
 How to Create Window Dialog To Select File | Python Examples
 
 https://www.youtube.com/watch?v=XXPNpdaK9WA
+QtDesigner and PyQt5: The right and wrong way to use them together
 
 https://www.youtube.com/watch?v=DZMJ77akgec
 #ComputerVision #OpenCV #CVZone
@@ -20,3 +25,9 @@ Python Tutorial: re Module - How to Write and Match Regular Expressions (Regex)
 
 https://www.youtube.com/watch?v=uXlL2PeuLpQ
 PyQt5 open File Dialog and read file or ( browse File)
+
+https://www.youtube.com/watch?v=hqC9tioGCi0
+How to Create a GUI Restaurant Management Systems in Python - Tutorial 1
+
+https://www.youtube.com/watch?v=7Jl-RwkzqQ4
+What is Tableau ? Explained in under 10 mins!

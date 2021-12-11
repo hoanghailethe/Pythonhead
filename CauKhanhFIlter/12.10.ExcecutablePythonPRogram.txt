@@ -6,4 +6,6 @@ You can use the following command if you do not want to create additional python
 
 python -m PyInstaller myscript.py
 
+python -m PyInstaller QuangFilterExcel.py
+
 
