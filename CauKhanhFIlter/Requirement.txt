@@ -1,0 +1,20 @@
+Đầu bài:
+Tìm trong cột K rồi lấy thời gian hh:mm ở đầu dòng của dòng text có chứa 1 trong các keyword nêu dưới đây rồi điền vào 1 cột
+
+hh:mm ........escalated to ASP ......
+hh:mm ..... escalate to ASP....
+hh:mm:    bla bla ... escalated ASP..
+hh:mm    .... Call ASP...
+hh:mm ...... ...Call depot...
+hh:mm .... ...escalated depot
+hh:mm ....  escalate to depot
+
+Lấy hh:mm rồi điền vào 1 cột
+
+************
+14:30: Depot onsite ...
+hh:mm: ASP onsite ...
+
+Lấy hh:mm rồi điền vào 1 cột khác
+
+

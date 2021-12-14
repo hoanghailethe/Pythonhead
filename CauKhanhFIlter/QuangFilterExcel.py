@@ -5,7 +5,7 @@ from tkinter import filedialog
 import os
 
 # Keyword input provided
-a_condition = ['escalated to ASP', 'escalate to ASP', 'escalated ASP', 'Call ASP', 'Call depot', 'escalated depot', 'escalate to depot']
+a_condition = ['escalated to ASP', 'escalate to ASP', 'escalated ASP', 'Call ASP', 'Call depot', 'escalated depot', 'escalate to depot', 'dispatch Asp' ]
 b_condition = ['Depot onsite', 'ASP onsite']
 
 def start():
@@ -23,6 +23,8 @@ def start():
     print('Finish!! Choose where to save your file!')
     print('Congrat!! Your file is successfully saved')
     print('Have fun! Press any key to quit!')
+    input('End of program!')
+    exit()
 
 
 def filter_result( a : str  ) -> str :
