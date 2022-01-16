@@ -1,5 +1,6 @@
 class Solution:
-    # not done
+    # Runtime: 308 ms, faster than 40.75% of Python3
+    # Memory Usage: 15.7 MB, less than 32.50% 
     def findShortestSubArray(self, nums: List[int]) -> int:
         maxAppear = 0 
         frequence = {}
@@ -17,7 +18,9 @@ class Solution:
                 timeAppear[2] += 1
 
             if timeAppear[2] >= maxAppear:
-                maxAppear = timeAppear[2]
+                if timeAppear[2] > maxAppear:
+                    maxAppear = timeAppear[2]
+                    shortestSubLeng = 99999999
 
                 dif = idx - timeAppear[0] + 1
                 # print(dif)
