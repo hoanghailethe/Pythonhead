@@ -1,0 +1,11 @@
+Cậu nhờ cháu giúp nhé
+Đầu bài:
+tìm trong cột K: nếu phát hiện thấy dòng text với 1 trong keyword sau (hàm OR(sad)
+victim
+victims
+children
+sites con
+site con
+all sites
+all site
+ thì bắt lấy thời gian ở đầu dòng (hh:mm) ghi vào 1 cột riêng.
