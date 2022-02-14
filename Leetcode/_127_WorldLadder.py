@@ -1,8 +1,8 @@
 class Solution:
+    # Time Limit Exceeded 33/50 testcase
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        
         next_begin_words = [beginWord]
-        stepCount = 0
+        stepCount = 1
 
         def is_dif_one_char( a: str, b:str) -> bool:
             if a == b or len(a) != len(b): 
@@ -17,9 +17,9 @@ class Solution:
                 return dif_number == 1
 
         while next_begin_words:
+            saved_word = []
+            stepCount += 1
             for thisWord in next_begin_words :
-                stepCount += 1
-                saved_word = []
                 # print(saved_word)
                 for nextWord in wordList:
                     if is_dif_one_char( nextWord, thisWord ):
