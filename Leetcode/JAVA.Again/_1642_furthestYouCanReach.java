@@ -41,4 +41,38 @@ public class _1642_furthestYouCanReach {
 
         return lowerBuilding + countClimb ;
     }
+
+    Input
+    [4,2,7,6,9,14,12]
+    5
+    1
+    Output
+    5
+    Expected
+    4
+    public int furthestBuilding2(int[] heights, int bricks, int ladders) { 
+        int countBuildingClimbed = 0 ; 
+        int preBuildingHeight = heights[0] ; 
+        for (int i = 1 ; i < heights.length  ; i ++ ) {
+            // System.out.println( i );
+            // System.out.println( ladders > 0 || bricks > 0 );
+            // System.out.println( bricks > 0 && heights[i] - preBuildingHeight >= bricks );
+
+            if (heights[i] <= preBuildingHeight ) {
+                countBuildingClimbed ++ ; 
+            } else if (bricks > 0 && heights[i] - preBuildingHeight <= bricks ) {
+                bricks -= (heights[i] - preBuildingHeight) ; 
+                // System.out.println( bricks );
+                countBuildingClimbed ++ ;
+            } else if (ladders > 0) {
+                ladders-- ;
+                countBuildingClimbed ++ ;
+            }
+            if (ladders == 0 && bricks == 0 && preBuildingHeight < heights[i]) break;
+
+            preBuildingHeight = heights[i];
+            
+        }
+        return countBuildingClimbed;
+    }
 }
