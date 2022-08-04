@@ -413,6 +413,10 @@ SELECT PREPARER_ID, RM_ID FROM SML_CA WHERE ca_number LIKE 'CAR/19/0001/00122/00
 
 SELECT * FROM SML_CA WHERE 
 
+-- check and tweak local data
+SELECT * FROM SML_USER WHERE LOWER(login_id) = 'rmtlklinh001';
+SELECT * FROM SML_CA WHERE ca_number LIKE '%CAR/19/0001/00122/00009171%' ;
+
 Customer: TRANG I2109
 CAR: CAR/19/0001/00122/00009171( Pending Approval)
 caklinh001 |Credit Approver
@@ -421,7 +425,7 @@ caklinh001 |Credit Approver
 SELECT * FROM SML_USER WHERE login_id like '%le ngoc quoc dat%' ; 
 -- sql 2 
 SELECT * FROM SML_CA WHERE ca_number LIKE '%CMM/22/9002/00924/04926052%' ;
---sql 2
+--sql_3
 SELECT 
           distinct trx.user_state, trx.originator_id, ooe.group_name ooe_grp_name, 
           c.customer_name, 
@@ -545,7 +549,6 @@ WHERE LOWER(A.login_id) = 'rmtlklinh001' ;
 --CUSC106008	clims123     
 --CUSC106007	2F795DEE489136705829D30375FF659C89415983
 --CUSC106006	637D9BB4FF56A71F9F21
-
 --SEND
 
 --sql1
@@ -665,3 +668,20 @@ SELECT
       -- DELETE
       DELETE FROM SML_CA WHERE ID = 202204070005567405;
       COMMIT ;
+
+
+-- SEARCH TRX
+SELECT trx.id, trx.*
+FROM sml_ca fp 
+inner join sml_customer c ON fp.borrower_id = c.id 
+          LEFT join sml_ooe_group_member mem ON mem.customer_id = c.id 
+          LEFT join sml_ooe_group ooe ON ooe.id = mem.ooe_group_id 
+          inner join sml_credit_memo cm ON cm.ca_id = fp.id 
+          inner join sml_prod_package pp ON fp.prod_package_id = pp.id 
+          inner join sml_fp_folder_details fd ON fd.credit_memo_id = cm.id 
+          inner join sml_trx trx ON trx.stage_ref_id = fd.fp_folder_id 
+WHERE fp.ca_number like '%CMM/22/9002/00924/04926052%' ;
+
+
+DELETE * FROM SML_TRX WHERE ID = 202204070005254896 ;
+COMMIT ;
