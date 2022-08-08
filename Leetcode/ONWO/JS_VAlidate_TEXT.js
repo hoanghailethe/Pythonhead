@@ -48,7 +48,7 @@ function submit() {
 //test 1 field input
 //gug7 99t7/$%^<
 // const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|<>\?~]/;
+const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|<>\/?~]/;
 
 var ele = document.getElementsByName('generalRemarks')[0] ;
 console.log(ele.value)
