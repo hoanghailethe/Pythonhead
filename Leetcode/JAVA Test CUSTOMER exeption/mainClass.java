@@ -1,0 +1,73 @@
+// https://stackoverflow.com/questions/57857855/could-not-find-or-load-main-class-vs-code
+
+public class mainClass {
+    /**
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) {
+        String empty = " ";
+        String abc = "abc" ;
+        // CheckValidString1 checker1 = new CheckValidString1();
+     
+        // direct use
+        try{
+            String res1 = CheckValidString1.checkString(empty);
+            System.out.println(res1);
+        } catch (EmptyStringExption e) {
+            System.out.println(e.getMessage());
+            System.out.println(e);
+        } catch (BusinessException e) {
+            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+        try{
+            String res2 = CheckValidString1.checkString(abc);
+            System.out.println(res2);
+        } catch (EmptyStringExption e) {
+            System.out.println(e.getMessage());
+            System.out.println(e);
+        } catch (BusinessException e) {
+            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        //test by 1 more user layer
+        System.out.println("check throught layers");
+        CheckValidStringUser userLayer = new CheckValidStringUser();
+        try{
+            userLayer.useCheckValidString1(empty);
+            
+        } catch (EmptyStringExption e) {
+            System.out.println("EXP COME HERE1");
+            System.out.println(e.getMessage());
+            System.out.println(e);
+        } catch (BusinessException e) {
+            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println("EXP COME HERE2 PARENT");
+            System.out.println(e);
+        }
+
+
+        try{
+            userLayer.useCheckValidString1(abc);
+            
+        } catch (EmptyStringExption e) {
+            System.out.println("EXP COME HERE1");
+            System.out.println(e.getMessage());
+            System.out.println(e);
+        } catch (BusinessException e) {
+            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println("EXP COME HERE 2 PARENT");
+            System.out.println(e);
+        }
+    }
+}
+
+
