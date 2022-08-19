@@ -3,7 +3,7 @@ select * from sml_ca ca where ca.ca_number = 'CAR/22/9002/00622/04998786'
 SELECT llp_bca_ref_num -- application no 							
 FROM (
         SELECT llp_bca_ref_num,
-            cms_aa_id
+            cms_aa_id, sci_lsp_aa_profile.*
         FROM sci_lsp_aa_profile
         WHERE llp_le_id = 3017992228 --CIF                              
             AND llp_bca_ref_num IS NOT NULL
@@ -188,6 +188,65 @@ FROM SCI_PLEDGOR_DTL, SCI_SEC_PLDGR_MAP, CMS_SECURITY
 WHERE SCI_PLEDGOR_DTL.CMS_PLEDGOR_DTL_ID = SCI_SEC_PLDGR_MAP.CMS_PLEDGOR_DTL_ID 
 	AND SCI_SEC_PLDGR_MAP.CMS_COLLATERAL_ID = CMS_SECURITY.CMS_COLLATERAL_ID 
 	AND cms_security.CMS_COLLATERAL_ID IN (select CMS_COLLATERAL_ID from cms_ca_collateral_map map where map.los_bca_ref_num LIKE '%CAR/22/9002/00622/04998786%' ) ;
+
+-- add more infor about SECURITY and TRANSACTION 8/19/2022
+SELECT * FROM CMS_SECURITY WHERE CMS_COLLATERAL_ID IN (select CMS_COLLATERAL_ID from cms_ca_collateral_map map where map.los_bca_ref_num LIKE '%CAR/22/9002/00622/04998786%' ); 
+
+SELECT llp_bca_ref_num, sci_lsp_aa_profile.*
+        FROM sci_lsp_aa_profile
+        WHERE llp_le_id = 3017992228 --CIF                              
+            AND llp_bca_ref_num IS NOT NULL
+            AND (
+                cms_aa_status <> 'DELETED'
+                OR (
+                    cms_aa_id NOT IN (
+                        SELECT reference_id
+                        FROM TRANSACTION
+                        WHERE transaction_type = 'AA_PROFILE'
+                            AND status <> 'ACTIVE'
+                    )
+                )
+            )
+        ORDER BY cms_aa_id DESC;
+
+SELECT llp_bca_ref_num, sci_lsp_aa_profile.* FROM sci_lsp_aa_profile
+WHERE llp_le_id = 3017992228 --CIF                              
+AND llp_bca_ref_num IS NOT NULL
+ORDER BY cms_aa_id DESC;
+
+SELECT reference_id, 
+    TRANSACTION.*
+    FROM TRANSACTION
+    WHERE transaction_type = 'AA_PROFILE'
+        AND status <> 'ACTIVE' AND reference_id IN ( SELECT cms_aa_id FROM sci_lsp_aa_profile WHERE llp_bca_ref_num= 3017992228) ; 
+
+SELECT * FROM TRANSACTION WHERE transaction_type = 'AA_PROFILE' AND reference_id IN ( SELECT cms_aa_id FROM sci_lsp_aa_profile WHERE llp_bca_ref_num= 3017992228) ;
+
+SELECT SCI_LE_SUB_PROFILE.* FROM SCI_LE_SUB_PROFILE WHERE LSP_LE_ID LIKE '%3017992228%';
+
+SELECT SCI_LE_MAIN_PROFILE.*
+FROM SCI_LE_SUB_PROFILE
+INNER JOIN SCI_LE_MAIN_PROFILE ON SCI_LE_SUB_PROFILE.CMS_LE_MAIN_PROFILE_ID = SCI_LE_MAIN_PROFILE.CMS_LE_MAIN_PROFILE_ID
+WHERE LSP_LE_ID LIKE '%3017992228%';
+
+SELECT *
+FROM TRANSACTION
+WHERE transaction_type = 'AA_PROFILE'
+    AND CUSTOMER_ID IN (
+        SELECT CMS_LE_SUB_PROFILE_ID
+        FROM SCI_LE_SUB_PROFILE
+            INNER JOIN SCI_LE_MAIN_PROFILE ON SCI_LE_SUB_PROFILE.CMS_LE_MAIN_PROFILE_ID = SCI_LE_MAIN_PROFILE.CMS_LE_MAIN_PROFILE_ID
+        WHERE LSP_LE_ID LIKE '%3017992228%'
+    );
+
+select * from TRANS_HISTORY where transaction_id in (select transaction_id from transaction WHERE transaction_type = 'AA_PROFILE'
+    AND CUSTOMER_ID IN (
+        SELECT CMS_LE_SUB_PROFILE_ID
+        FROM SCI_LE_SUB_PROFILE
+            INNER JOIN SCI_LE_MAIN_PROFILE ON SCI_LE_SUB_PROFILE.CMS_LE_MAIN_PROFILE_ID = SCI_LE_MAIN_PROFILE.CMS_LE_MAIN_PROFILE_ID
+        WHERE LSP_LE_ID LIKE '%3017992228%'
+    ));
+
 
 --asset Table:
 SELECT * FROM CMS_CASH WHERE CMS_COLLATERAL_ID IN (select CMS_COLLATERAL_ID from cms_ca_collateral_map map where map.los_bca_ref_num LIKE '%CAR/22/9002/00622/04998786%');
