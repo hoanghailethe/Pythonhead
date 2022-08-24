@@ -5,7 +5,7 @@ public class mainClass {
      * @param args
      * @throws Exception
      */
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         String empty = " ";
         String abc = "abc" ;
         // CheckValidString1 checker1 = new CheckValidString1();
@@ -89,6 +89,30 @@ public class mainClass {
             else System.out.println(e);
         }
     }
+
+    public static int Average (Integer[] nums) {
+        if (nums.length == 0) return 0;
+        int sum = 0 ;
+        for (Integer num : nums) {
+            sum += num;
+        }
+        return sum / nums.length ;
+    }
+
+
+    public static void main(String[] args) {
+        Integer[] nums = {1,33,55 ,99} ;
+        int average = Average(nums) ;
+        System.out.println(average);
+
+        if(average >= 10 ) {
+            System.out.println("Double digits");
+        } else {
+            System.out.println("Single digits");
+        }
+    }
+
+
 }
 
 
