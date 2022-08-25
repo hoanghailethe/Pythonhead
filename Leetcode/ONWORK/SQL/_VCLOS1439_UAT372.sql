@@ -74,3 +74,10 @@ SELECT doc.* FROM sml_doc doc WHERE doc.ca_id = ( SELECT ID FROM SML_CA WHERE CA
 --         AND doc.checklist_type = :checklist_type_in;
 
 
+--372 
+select product.LOAN_TREASURY_TYPE from "
+    		+ "sml_facility fac left join SML_PROD_PKG_PRODUCT pkproduct on fac.prod_pkg_product_id = pkproduct.id "
+    		+ "left join SML_PRODUCT product on pkproduct.PRODUCT_ID = product.id "
+    		+ "where fac.id=? 
+
+            
