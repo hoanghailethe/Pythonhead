@@ -84,6 +84,9 @@ sci_sec_pldgr_map
 cms_property p  where s.cms_collateral_id = p.cms_collateral_id
 CMS_LIMIT_CHARGE_MAP  MAP1  MAP1.CMS_COLLATERAL_ID = SEC.CMS_COLLATERAL_ID 
 
+
+D:\VTBCLIMS\src\com\integrosys\cms\host\eai\document\actualtrxhandler\CheckListPersistentHandler.java
+
 goto COLLATERALDAO
 	private static String SELECT_COLLATERAL_WITH_AA = "SELECT cms_security.SCI_SECURITY_DTL_ID, cms_security.CMS_COLLATERAL_ID "
 			+ "FROM cms_security_sub_type, cms_security_source SOURCE, cms_limit_security_map lsm, "
@@ -163,6 +166,8 @@ FROM cms_price_feed pf, cms_security sec, cms_portfolio_item pi
 
 -- HO SO TSDB
 sci_lsp_appr_lmts limits
+cms_checklist
+cms_checklist_item    CHECKLIST_ID
 
 -- tim them qua cms colateral ID
  FROM   cms_portfolio_item portfolio
@@ -171,12 +176,30 @@ sci_lsp_appr_lmts limits
           FROM   cms_cash_deposit deposit
           WHERE  deposit.cms_collateral_id = sec.cms_collateral_id
 
+        SELECT COUNT(*) FROM CMS_FACILITY_MASTER;
+        SELECT COUNT(*) FROM CMS_DOCUMENT;
+        SELECT COUNT(*) FROM CMS_FACILITY_MASTER;
+        SELECT COUNT(*) FROM CMS_FACILITY_MASTER;
 
 
 
+-- 9/6/2022 CONCLUDED
 
+-- FACILITY 
+CMS_FACILITY_MASTER <= ( CMS_FAC_MASTER_ID ) = MS_FAC_RELATIONSHIP, CMS_FAC_MULTI_TIER_FINANCING, CMS_FAC_PREPAYMENT_LIST, CMS_FAC_REDUCTION_SCHEDULE,
+												CMS_LSP_APPR_DRAWING_CURR , CMS_FAC_MESSAGE , CMS_FAC_INCREMENTAL , CMS_FAC_REDUCTION_SCHEDULE, 
+												CMS_FAC_GENERAL, CMS_FAC_INTEREST , CMS_FAC_ADDITIONAL , CMS_FAC_FEE_CHARGE, CMS_FAC_BNM_CODES , CMS_FAC_ISLAMIC_MASTER,
+												CMS_FAC_BBA_VARI_PACKAGE , CMS_FAC_RENTAL_RENEWAL , CMS_FAC_SECURITY_DEPOSIT , CMS_FAC_SECURITY_DEPOSIT ,
+												CMS_FAC_TSPR , CMS_STG_FAC_GENERAL , CMS_STG_FAC_INTEREST , CMS_STG_FAC_ADDITIONAL , CMS_STG_FAC_FEE_CHARGE, 
+												CMS_STG_FAC_BNM_CODES , CMS_STG_FAC_PAYMENT , CMS_STG_FAC_ISLAMIC_MASTER , CMS_STG_FAC_BBA_VARI_PACKAGE ,
+												CMS_STG_FAC_RENTAL_RENEWAL , CMS_STG_FAC_SECURITY_DEPOSIT, CMS_STG_FAC_TSPR 
 
+-- COL (TSBĐ)
+CMS_SECURITY  <= ( cms_collateral_id ) = cms_limit_security_map, cms_cash_deposit , cms_guarantee , sci_sec_pldgr_map, cms_property ,cms_checklist , cms_ca_collateral_map
+										 CMS_LIMIT_CHARGE_MAP     <=  ( CMS_LSP_APPR_LMTS_ID ) = SCI_LSP_APPR_LMTS 
 
-
+-- HO SO TSBĐ
+cms_checklist  <= ( CHECKLIST_ID ) = cms_checklist_item    
+									 
 
              
