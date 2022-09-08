@@ -199,7 +199,97 @@ CMS_SECURITY  <= ( cms_collateral_id ) = cms_limit_security_map, cms_cash_deposi
 										 CMS_LIMIT_CHARGE_MAP     <=  ( CMS_LSP_APPR_LMTS_ID ) = SCI_LSP_APPR_LMTS 
 
 -- HO SO TSBĐ
-cms_checklist  <= ( CHECKLIST_ID ) = cms_checklist_item    
-									 
+cms_checklist  <= ( CHECKLIST_ID ) = cms_checklist_item  stage_checklist_item   <= ( doc_item_ref == checklist_item_ref_id ) = cms_cust_doc_item
+stage_checklist						 cms_cust_doc 																				stage_cust_doc_item
 
-             
+									cms_stage_cust_doc			<= ( custodian_doc_id) =	  stage_cust_doc_item
+
+cms_stage_cust_doc <= ( custodian_doc_id == staging_reference_id ) = TRANSACTION
+								TRANSACTION_TYPE = 'CUSTODIAN'
+STAGE_CHECKLIST_ITEM <= ( CHECKLIST_ID == staging_reference_id ) = TRANSACTION
+								TRANSACTION_TYPE = 'CHECKLIST'
+
+cms_stage_cust_doc_item
+
+SELECT stage_cust_doc_item.checklist_item_ref_id, "
+				+ "			 		    	MAX(stage_cust_doc_item.custodian_doc_item_id) custodian_doc_item_id "
+				+ "		   			 FROM  cms_stage_cust_doc stage_cust_doc, "
+				+ "			 			   cms_stage_cust_doc_item stage_cust_doc_item  "
+				+ "		  			 WHERE  stage_cust_doc.custodian_doc_id  = stage_cust_doc_item.custodian_doc_id
+				GROUP BY  stage_cust_doc_item.checklist_item_ref_id  "
+				+ "	        ) max_stage_cust_doc  "
+
+
+				+ "	  WHERE TRANSACTION.transaction_type  = 'CUSTODIAN' "
+				+ "	   AND  TRANSACTION.staging_reference_id  = cms_stage_cust_doc.custodian_doc_id "
+				+ "	   AND  cms_stage_cust_doc.custodian_doc_id  = cms_stage_cust_doc_item.custodian_doc_id "
+				+ "	   AND  cms_stage_cust_doc_item.custodian_doc_item_id  = max_stage_cust_doc.custodian_doc_item_id "
+				+ "    AND  TRANSACTION.status  <> 'CLOSED' "
+				+ " ) custodian_trx  ON  cms_checklist_item.doc_item_ref  = custodian_trx.checklist_item_ref_id  , "
+				+ "	stage_checklist_item  "
+				+ "WHERE cms_checklist.checklist_id  = cms_checklist_item.checklist_id "
+				+ "AND	 cms_checklist_item.is_deleted  = 'N' "
+                + "AND   (cms_checklist_item.status = 'COMPLETED' OR cms_checklist_item.status = 'DEFERRED') "
+//				+ "AND	(cms_checklist_item.status  <> 'DELETED' OR (cms_checklist_item.status  = 'DELETED' AND	custodian_trx.status  IS NOT NULL)) "
+				+ "AND	stage_checklist_item.doc_item_id  = (SELECT MAX(stage_chklist_item.doc_item_id) "
+				+ "		                             FROM  stage_checklist_item stage_chklist_item  "
+				+ "		                             WHERE stage_chklist_item.doc_item_ref  = cms_checklist_item.doc_item_ref) 
+
+				SELECT stage.custodian_doc_item_barcode "
+   	     + " FROM CMS_STAGE_CUST_DOC_ITEM stage, transaction t "
+   	     + " WHERE CUSTODIAN_DOC_ID = t.STAGING_REFERENCE_ID "
+   	     + " AND t.TRANSACTION_TYPE = 'CUSTODIAN' AND t.STATUS IN ('PENDING_CREATE','PENDING_UPDATE') "
+   	     + " AND stage.status NOT IN ('RECEIVED', 'PERM_UPLIFTED') "
+   	     + " AND stage.sec_envelope_barcode IS NOT NULL AND stage.sec_envelope_barcode in ("
+   	     + " select EI.SEC_ENVELOPE_ITEM_BARCODE  from TRANSACTION t, "
+   	     + " CMS_SEC_ENVELOPE_ITEM ei where T.TRANSACTION_TYPE = 'SEC_ENVELOPE' and T.TRANSACTION_ID = ? "
+   	     + " and EI.SEC_ENVELOPE_ID= T.REFERENCE_ID "
+   	     + " minus "
+   	     + " select SEI.SEC_ENVELOPE_ITEM_BARCODE from "
+   	     + " TRANSACTION t, CMS_STAGE_SEC_ENVELOPE_ITEM sei "
+   	     + " where T.TRANSACTION_TYPE=  'SEC_ENVELOPE' and T.TRANSACTION_ID = ? "
+   	     + " and SEI.SEC_ENVELOPE_ID= T.STAGING_REFERENCE_ID)
+
+ "left outer join  cms_cust_doc ON cms_checklist.checklist_id  = cms_cust_doc.checklist_id\n" +
+  "cms_checklist_item \n" +
+            "LEFT OUTER JOIN  cms_cust_doc_item  ON \n" +
+            "cms_checklist_item.doc_item_ref  = cms_cust_doc_item.checklist_item_ref_id \n" +
+
+			FROM stage_checklist_item s LEFT OUTER JOIN CMS_CUST_DOC_ITEM cust ON cust.CHECKLIST_ITEM_REF_ID = s.DOC_ITEM_REF, "
+				+ "       cms_checklist_item citem, " + "       TRANSACTION t, " + "       sci_lsp_lmt_profile, "
+				+ "       sci_le_sub_profile, " + "       sci_le_main_profile, " + "       stage_checklist, "
+
+				AND t.transaction_type = 'CHECKLIST' "
+				+ "  	AND t.status NOT IN ('OBSOLETE', 'CLOSED', 'PENDING_CREATE') "
+				+ "   AND t.staging_reference_id = stage_checklist.checklist_id "
+				+ "   AND t.reference_id = citem.checklist_id " + "   AND citem.expiry_date IS NOT NULL "
+				+ "   AND s.doc_item_ref = citem.doc_item_ref "
+
+				Transaction 
+TRANSACTION
+
+ FROM TRANSACTION trans 
+                             WHERE trans.TRANSACTION_TYPE = 'COL' 
+                             AND trans.REFERENCE_ID = pt.CMS_COLLATERAL_ID
+
+SELECT DISTINCT(transaction_type) FROM TRANSACTION;
+
+
+			+ " FROM CMS_DOCUMENT_GLOBALLIST, CMS_DOC_LOAN_APP_TYPE , TRANSACTION WHERE CMS_DOCUMENT_GLOBALLIST.DOCUMENT_ID = TRANSACTION.REFERENCE_ID "
+			+ " AND CMS_DOC_LOAN_APP_TYPE.DOCUMENT_ID = CMS_DOCUMENT_GLOBALLIST.DOCUMENT_ID "
+			+ " AND TRANSACTION.TRANSACTION_TYPE = 'DOCITEM'"
+
+			FROM CMS_DOCUMENT_GLOBALLIST, CMS_DOC_LOAN_APP_TYPE , TRANSACTION WHERE CMS_DOCUMENT_GLOBALLIST.DOCUMENT_ID = TRANSACTION.REFERENCE_ID "
+			+ " AND CMS_DOC_LOAN_APP_TYPE.DOCUMENT_ID = CMS_DOCUMENT_GLOBALLIST.DOCUMENT_ID "
+			+ " AND TRANSACTION.TRANSACTION_TYPE = 'DOCITEM'";
+
+			stg_chk.DOC_ORIG_COUNTRY " + "FROM TRANSACTION trx, "
+			+ "     STAGE_CHECKLIST_ITEM stg_chk_item, " + "     SCI_LSP_LMT_PROFILE lp, "
+			+ "     SCI_LE_SUB_PROFILE sp, " + "     STAGE_CHECKLIST stg_chk LEFT OUTER JOIN  "
+			+ "       CMS_SECURITY sec ON sec.CMS_COLLATERAL_ID = stg_chk.CMS_COLLATERAL_ID "
+			+ "WHERE trx.STAGING_REFERENCE_ID = stg_chk_item.CHECKLIST_ID "
+			+ "      AND stg_chk.CHECKLIST_ID = stg_chk_item.CHECKLIST_ID "
+			+ "      AND trx.TRANSACTION_TYPE = 'CHECKLIST' "
+			+ "      AND stg_chk.CMS_LSP_LMT_PROFILE_ID = lp.CMS_LSP_LMT_PROFILE_ID "
+			+ "      AND lp.CMS_CUSTOMER_ID = sp.CMS_LE_SUB_PROFILE_ID " + "      AND stg_chk_item.doc_item_ref";
+
