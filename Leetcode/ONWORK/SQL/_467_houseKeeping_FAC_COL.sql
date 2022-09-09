@@ -293,3 +293,67 @@ SELECT DISTINCT(transaction_type) FROM TRANSACTION;
 			+ "      AND stg_chk.CMS_LSP_LMT_PROFILE_ID = lp.CMS_LSP_LMT_PROFILE_ID "
 			+ "      AND lp.CMS_CUSTOMER_ID = sp.CMS_LE_SUB_PROFILE_ID " + "      AND stg_chk_item.doc_item_ref";
 
+
+-- COL
+-- check CLOS
+8 loại TSBĐ
+AB , CS, DC, GT, IN, MS, OP, PT 
+
+--find table Sec_subtype
+SELECT * FROM user_tables where table_name like '%ASSET%';
+SELECT * FROM user_tables where table_name like '%CASH%';
+
+
+
+SELECT * FROM CMS_SECURITY WHERE CMS_COLLATERAL_ID IN ( 20220726020559087, 20220726020559085);
+SELECT * FROM CMS_ASSET;
+SELECT * FROM CMS_CASH;
+SELECT * FROM SCI_PLEDGOR_DTL;
+SELECT * FROM SCI_SEC_PLDGR_MAP;
+
+
+SELECT * FROM user_tables where table_name like '%ASSET%';
+SELECT * FROM CMS_ASSET_VEHICLE WHERE cms_collateral_id IN (20220726020559087, 20220726020559085) ;
+
+SELECT * FROM CMS_STAGE_ASSET_VEHICLE WHERE cms_collateral_id IN (20220726020559087, 20220726020559085) ;
+
+SELECT* FROM CMS_SECURITY_SUB_TYPE;
+
+-- add thí for case 1438
+SELECT * FROM CMS_ASSET_VEHICLE WHERE cms_collateral_id IN (20220726020559087, 20220726020559085) ;
+
+
+--cms ASSET
+"FROM CMS_ASSET A, CMS_SECURITY COL " + "WHERE A.CMS_COLLATERAL_ID = ? "
+				+ "AND A.CMS_COLLATERAL_ID = COL.CMS_COLLATERAL_ID";
+
+				FROM CMS_ASSET_PDC WHERE CMS_COLLATERAL_ID = 
+
+			+ "           FROM cms_asset asst LEFT OUTER JOIN cms_asst_gc_debtor dbt  "
+			+ "           ON asst.cms_collateral_id = dbt.cms_collateral_id, " + "                cms_security sec "
+			+ "          WHERE sec.security_sub_type_id = 'AB100' "
+			+ "            AND sec.cms_collateral_id = asst.cms_collateral_id " + "            AND NOT EXISTS ( "
+
+
+			+ "           FROM cms_asset asst LEFT OUTER JOIN cms_asst_gc_debtor dbt  "
+			+ "               ON asst.cms_collateral_id = dbt.cms_collateral_id, "
+			+ "                cms_security sec, cms_asst_gc_stock stk "
+			+ "          WHERE sec.security_sub_type_id = 'AB100' "
+			+ "            AND sec.cms_collateral_id = asst.cms_collateral_id "
+			+ "            AND asst.cms_collateral_id = stk.cms_collateral_id "
+
+					buf.append("FROM cms_asset asset LEFT OUTER JOIN cms_asset_vehicle veh ON ");
+		buf.append("asset.cms_collateral_id = veh.cms_collateral_id WHERE asset.cms_collateral_id IN (");
+
+		buf.append("FROM cms_asset asset LEFT OUTER JOIN cms_asset_aircraft aircraft ON ");
+		buf.append("asset.cms_collateral_id = aircraft.cms_collateral_id WHERE asset.cms_collateral_id IN (");
+
+
+		buf.append("SELECT asset.cms_collateral_id, type_of_asset, manufacture_year, model_no, plantequip.serial_no ");
+		buf.append("FROM cms_asset asset LEFT OUTER JOIN cms_asset_plant_equip plantequip ON ");
+		buf.append("asset.cms_collateral_id = plantequip.cms_collateral_id WHERE asset.cms_collateral_id IN (");
+
+		                "from cms_asset_gold gd, cms_security sec " +
+                "where gd.cms_collateral_id = sec.cms_collateral_id " +
+
+				
