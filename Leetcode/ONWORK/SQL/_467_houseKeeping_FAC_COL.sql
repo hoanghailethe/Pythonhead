@@ -356,4 +356,73 @@ SELECT * FROM CMS_ASSET_VEHICLE WHERE cms_collateral_id IN (20220726020559087, 2
 		                "from cms_asset_gold gd, cms_security sec " +
                 "where gd.cms_collateral_id = sec.cms_collateral_id " +
 
-				
+-- FIND DOWN MORE ON 9/14/2022
+ERROR_HOST_APP_FAIL_DOWNLOAD_FACILITY_COLLATERAL_MESSAGE
+
+No Such Customer Exists with CIF Number 
+
+
+        if(ICMSConstant.STATE_DELETED.equals(tmpSec.getCMSStatus()) || ICMSConstant.STATE_PENDING_DELETE.equals(tmpSec.getCMSStatus())){
+                    tmpSec.setCMSStatus(ICMSConstant.STATE_ACTIVE);
+                    if(CommonUtil.isEmpty(tmpSec.getCoreSecurityId()) 
+                    		&& ICMSConstant.HOST_COL_STATUS_DELETED.equals(tmpSec.getCollateralStatus())) {
+                    	tmpSec.setCollateralStatus(ICMSConstant.HOST_COL_STATUS_ACTIVE);
+                    	colStatus = ICMSConstant.HOST_COL_STATUS_ACTIVE;
+
+
+ protected String getCustodianPrintReversalMemoQuery(CustodianSearchCriteria aCustodianSearchCriteria) {
+
+final String selectPart = "\n" +
+
+
+protected ApprovedSecurity updateSecurity(ApprovedSecurity security, Vector valuationList, boolean isVariation) {
+		String messageSource = EAIMessageSynchronizationManager.getMessageSource();
+		if (!helper.isShareSecurity(security)) {
+			// check CMS_SECURITY table for security_id + source_id to allow
+			// only owner of security can update security record
+			checkSecurityOwner(security);
+
+protected ApprovedSecurity storeSecurity(ApprovedSecurity security, Vector valuationList, boolean isVariation)
+			throws EAIMessageValidationException {
+		if (helper.isCreate(security)) {
+
+
+
+--- SQL 
+SELECT DISTINCT(INTEGRATION_STS_2_RESULT_DESC) FROM sml_ca_history ;
+
+SELECT DISTINCT(INTEGRATION_STS_2_RESULT_DESC) FROM sml_ca ;
+
+SELECT DISTINCT(INTEGRATION_STS_1_RESULT_DESC)  FROM sml_ca WHERE INTEGRATION_STS_1_RESULT_DESC LIKE '%No Such Customer Exists%';
+
+--ApprovedSecurity
+SELECT DISTINCT(STATUS) FROM CMS_SECURITY ; -- CMSStatus
+SELECT DISTINCT(COLLATERAL_STATUS) FROM CMS_SECURITY ; --collateralStatus
+
+--no OF LINKAGE to COL
+public Long getNumberOfLinkageByCollateral(long collateralId) throws CollateralException {
+		String sql = " SELECT count(1) as numberOfLinkage"
+				+	" FROM CMS_LIMIT_SECURITY_MAP ls"
+				+	" WHERE LS.CMS_COLLATERAL_ID = ?"
+				+ 	" AND LS.UPDATE_STATUS_IND <> 'D'";
+		return doGetNumberOfLinkageByCollateral(sql, collateralId);
+	}
+
+
+1. Ảnh hưởng khi xóa
+- DATA integrity giữa 3 Hệ thống CMS, CLOS : phải xóa đồng bộ
+		VD: Change Reqest - create new
+
+2. Xóa case Active COL ảnh hưởng gì
+	- ảnh hưởng duy nhất hiện tại tìm ra là Lquan đến 1 cái BATCH chạy validation - calculate để SAVE data vào CMS_VALIDATION
+	- Ko ảnh hưởng nhiều, đều có thể work around nhưng ko khuyến khích xóa ACTIVE vì có thể TIỀM ẨN phát sinh lỗi vấn phát sinh sự cố ngoài mong muốn vì bất đồng bộ dự liêu
+		giữa data trên các hệ thống . VD trigger change của COL
+	- các data liên quan bị COL bị xóa => ko ảnh hưởng logic trên cùng hệ thống
+
+	- LƯu trữ ở đâu. Xuất file dump để import ra hệ thống khác hay là tạo BẢNG MỚI để lữu trữ DATA cũ, giữ nguyên các mqh và thay tên thôi?
+	- Nếu dọn trên CLIMS thì cũng nên DỌN trên CLOS tương ứng để tránh trường hợp các DATA cũ STP sang bị lỗi
+	- ?Có xóa các CAR liên quan hay không? 
+
+	- Xóa từ COL ???? Mối liên quan giữa FAC với bảng COL chưa rõ ràng
+
+3. Có xóa CAR ko nếu xóa hết COL
