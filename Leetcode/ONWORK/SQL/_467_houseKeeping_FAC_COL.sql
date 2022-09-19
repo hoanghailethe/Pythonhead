@@ -423,6 +423,17 @@ public Long getNumberOfLinkageByCollateral(long collateralId) throws CollateralE
 	- Nếu dọn trên CLIMS thì cũng nên DỌN trên CLOS tương ứng để tránh trường hợp các DATA cũ STP sang bị lỗi
 	- ?Có xóa các CAR liên quan hay không? 
 
-	- Xóa từ COL ???? Mối liên quan giữa FAC với bảng COL chưa rõ ràng
 
 3. Có xóa CAR ko nếu xóa hết COL
+
+-- procedure COPY and DELETE
+
+Dọn cần ĐK : xem có đồng bộ dữ liệu hay không => y/c chi nhánh đồng bộ
+image.png => REPORT
+
+	- B1: quyets hợp lệ 
+		+ RUlE để check hợp lệ có khớp hay không? - fac ko còn liên kết tsđb nào, tsbd còn liên kết hồ sơ hay không
+			- Liên kết -- 
+		+ 
+
+
