@@ -426,6 +426,80 @@ public Long getNumberOfLinkageByCollateral(long collateralId) throws CollateralE
 
 3. Có xóa CAR ko nếu xóa hết COL
 
+FAC and COL relationship la gi 
+
+facBuf = new StringBuffer();
+						facBuf.append("UPDATE cms_stg_facility_master SET date_instructed = ? ");
+						facBuf.append("WHERE id IN (SELECT staging_reference_id ");
+						facBuf.append("FROM transaction WHERE reference_id IN ( ");
+						facBuf.append("SELECT id FROM cms_facility_master WHERE cms_lsp_appr_lmts_id IN ( ");
+						facBuf.append("SELECT cms_lsp_appr_lmts_id FROM sci_lsp_appr_lmts ");
+						facBuf.append("WHERE cms_limit_profile_id = ?)) AND transaction_type = ?) ");
+						facBuf.append("AND date_instructed IS NULL");
+
+	"select l.CMS_LSP_APPR_LMTS_ID, l.LMT_OUTER_LMT_ID from sci_lsp_appr_lmts l, tempTable y, CMS_FACILITY_MASTER f, CMS_FAC_GENERAL g " +
+				"where L.CMS_LSP_APPR_LMTS_ID= F.CMS_LSP_APPR_LMTS_ID and F.ID= G.CMS_FAC_MASTER_ID and G.FAC_STATUS_CODE_VALUE ='A' " +
+				"and l.CMS_LSP_APPR_LMTS_ID = y.LMT_OUTER_LMT_ID ) select count(1) as levl from temptable";
+
+-- check FAC CONDITION STATUS AND date
+ //16-5-2011 kc chin trade spring, for tspr type, stp_master_trans will have 2 entry as 1 for arbs another for tspr. existing query unable to take care on it and will return 2 status instead of 1
+        //modify existing query as for double entry record, take the record with latest last_submission_date to derive the status
+
+        StringBuffer buf1 = new StringBuffer();
+		buf1.append("SELECT fac_trx.from_state, fac_trx.status, fac.to_be_cancelled_ind, fac.CANCEL_DELETE_IND,  ");
+		buf1.append("facgen.fac_status_code_value fac_status, fac.cms_lsp_appr_lmts_id, ");
+		buf1.append("m.is_stp_ready, stp_trx.status stp_status, fac_trx.transaction_subtype ");
+		buf1.append("FROM cms_facility_master fac, cms_fac_general facgen, transaction fac_trx ");
+		buf1.append("LEFT OUTER JOIN cms_stp_ready_status_map m ");
+		buf1.append("ON fac_trx.transaction_id = m.transaction_id AND fac_trx.transaction_type = m.transaction_type ");
+		buf1.append("LEFT OUTER JOIN (select master_trx_id, status, transaction_id from (select master_trx_id, s.status, transaction_id, RANK() ");
+        buf1.append("OVER (PARTITION BY transaction_id ORDER BY last_submission_date DESC) rank from stp_master_trans s, ");
+        buf1.append("cms_facility_master m where s.REFERENCE_ID = m.ID AND m.cms_lsp_appr_lmts_id  ");
+        //CommonUtil.buildSQLInList(cmsLimitIds, buf, argList);
+        StringBuffer buf2 = new StringBuffer();
+        buf2.append(")  b where rank = 1) stp_trx ");
+        buf2.append("ON fac_trx.transaction_id = stp_trx.transaction_id ");
+        buf2.append("WHERE fac_trx.REFERENCE_ID = fac.ID AND fac_trx.status <> 'CLOSED' ");
+        buf2.append("and fac_trx.transaction_type = 'FACILITY' ");
+		buf2.append("AND fac.id = facgen.cms_fac_master_id AND fac.cms_lsp_appr_lmts_id ");
+
+		String buf = "SELECT fac_trx.from_state, fac_trx.status, fac.to_be_cancelled_ind, fac.CANCEL_DELETE_IND,  facgen.fac_status_code_value fac_status,                   "
+        		+" fac.cms_lsp_appr_lmts_id, m.is_stp_ready, stp_trx.status stp_status, fac_trx.transaction_subtype                                                      "
+        		+"FROM cms_facility_master fac,cms_fac_general facgen, transaction fac_trx                                                                               "
+        		+" LEFT OUTER JOIN cms_stp_ready_status_map m ON fac_trx.transaction_id = m.transaction_id AND fac_trx.transaction_type = m.transaction_type             "
+        		+" LEFT OUTER JOIN (select master_trx_id, status, transaction_id from                                                                                    "
+        		+" (select master_trx_id, s.status, transaction_id, RANK() OVER (PARTITION BY transaction_id ORDER BY last_submission_date DESC)                         "
+        		+" rank from stp_master_trans s, cms_facility_master m where s.REFERENCE_ID = m.ID AND m.cms_lsp_appr_lmts_id   IN                                       "
+        		+" (select L.CMS_LSP_APPR_LMTS_ID from SCI_LSP_APPR_LMTS l where L.CMS_LIMIT_PROFILE_ID = ?))  b where rank = 1) stp_trx ON                              "
+        		+" fac_trx.transaction_id = stp_trx.transaction_id                                                                                                       "
+        		+"WHERE fac_trx.REFERENCE_ID                                                                                                                             "
+        		+" = fac.ID AND fac_trx.status <> 'CLOSED' and fac_trx.transaction_type = 'FACILITY' AND fac.id = facgen.cms_fac_master_id AND fac.cms_lsp_appr_lmts_id  "
+        		+" IN (select L.CMS_LSP_APPR_LMTS_ID from SCI_LSP_APPR_LMTS l where L.CMS_LIMIT_PROFILE_ID = ?)     
+
+
+				"WITH tempTable (id, CMS_LSP_APPR_LMTS_ID, LMT_OUTER_LMT_ID, stop) as " +
+                        "(select m.id, l.CMS_LSP_APPR_LMTS_ID, l.LMT_OUTER_LMT_ID, 0 " +
+                        "from sci_lsp_appr_lmts l, transaction t, cms_facility_master m " +
+                        "where m.id = t.reference_id " +
+                          "and t.transaction_type = 'FACILITY' " +
+                          "and l.CMS_LSP_APPR_LMTS_ID = m.CMS_LSP_APPR_LMTS_ID " +
+                          "and l.CMS_LSP_APPR_LMTS_ID = ? " +
+                        "union all " +
+                        "select m.id, l.CMS_LSP_APPR_LMTS_ID, l.LMT_OUTER_LMT_ID, case when y.CMS_LSP_APPR_LMTS_ID = l.CMS_LSP_APPR_LMTS_ID then 1 else 0 end " +
+                         "from sci_lsp_appr_lmts l, transaction t, cms_facility_master m, tempTable y " +
+                         "where m.id = t.reference_id " +
+                           "and t.transaction_type = 'FACILITY' " +
+                           "and l.CMS_LSP_APPR_LMTS_ID = m.CMS_LSP_APPR_LMTS_ID " +
+                           "and l.LMT_OUTER_LMT_ID = y.CMS_LSP_APPR_LMTS_ID and stop = 0) " +
+                         "select id, CMS_LSP_APPR_LMTS_ID from temptable where CMS_LSP_APPR_LMTS_ID != ?",
+
+		sqlBuf.append("UPDATE " + facilityMasterTableNameStage + " ");
+  		sqlBuf.append("SET  MAIN_FACILITY_AA_NUM = ? , MAIN_FACILITY_CODE = ? , MAIN_FACILITY_SEQ = ? , STANDBY_LINE = ?, LEVL = ? ");
+  		sqlBuf.append("WHERE ID = ( select T.STAGING_REFERENCE_ID from TRANSACTION t where T.TRANSACTION_TYPE='FACILITY' and T.REFERENCE_ID = ");
+  		sqlBuf.append(" ( select ID from CMS_FACILITY_MASTER where CMS_LSP_APPR_LMTS_ID = ?  ) )");
+
+
+
 -- procedure COPY and DELETE
 
 Dọn cần ĐK : xem có đồng bộ dữ liệu hay không => y/c chi nhánh đồng bộ
@@ -436,4 +510,10 @@ image.png => REPORT
 			- Liên kết -- 
 		+ 
 
+
+?? QUESTION 9/20
+1. INPUT TYPE of PARAMETER
+2.FAC CONDITION: CLOSED - not found in FACILITY_MASTER ? CHECk in TRANSACTON? but status is DELETED not CLOSED?
+3. can directly CHANGE STATUS of FAC / COL in CLIMS or do it in CLOS => STP to CLIMS??? 
+4. CHECK COL STATUS IN CMS_COLLATERAL OR TRANSACTION
 
