@@ -527,8 +527,10 @@ SELECT  DISTINCT(STATUS) FROM CMS_FAC_MULTI_TIER_FINANCING ;
 SELECT  DISTINCT(STATUS) FROM CMS_FAC_ISLAMIC_MASTER ; 
 SELECT  DISTINCT(STATUS) FROM CMS_FAC_TSPR ; 
 
+select distinct(transaction_type) from TRANSACTION ;
 
 select * from TRANSACTION WHERE transaction_type = 'FACILITY' ;
+select * from TRANSACTION WHERE transaction_type = 'COL' ;
 
 select distinct(status) from TRANSACTION WHERE transaction_type = 'FACILITY' ;
 --ACTIVE
@@ -548,3 +550,29 @@ select distinct(status) from TRANSACTION WHERE transaction_type = 'FACILITY' ;
 
 SELECT DISTINCT(COLLATERAL_STATUS)    FROM CMS_SECURITY ; -- 0 , 1
 SELECT DISTINCT(COLLATERAL_STATUS_BK)    FROM CMS_SECURITY ;  -- null 1 3
+
+select distinct(status) from TRANSACTION WHERE transaction_type = 'COL' ;
+-- ACTIVE
+-- PENDING_RETRY
+-- PENDING_UPDATE
+-- REJECTED_CREATE
+-- DELETED
+-- NEW
+-- DRAFT
+-- REJECTED
+-- PENDING_DELETE
+-- LOADING
+-- PENDING_PERFECTION
+
+
+-- get out these infomation to check
+SELECT FROM_STATE, TRANSACTION_TYPE, TRANSACTION_DATE, STATUS, reference_id
+FROM TRANSACTION 
+WHERE transaction_type = 'FACILITY';
+
+-- LINK PL SQL
+https://www.tutorialspoint.com/plsql/plsql_conditional_control.htm
+https://www.oracletutorial.com/plsql-tutorial/
+
+-- Compare date TIME
+

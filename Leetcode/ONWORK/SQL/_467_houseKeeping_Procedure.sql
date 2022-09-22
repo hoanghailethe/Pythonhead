@@ -133,8 +133,18 @@ DECLARE inPut VARCHAR2(4000) := @LIST_ID;
     ) LOOP 
         -- CHECK COL CONDITION HERE : FROM TRANSACTION TABLE
         BEGIN
+            FOR colCondition AS (
+                SELECT STATUS, TRANSACTION_DATE as date, reference_id as id
+                FROM TRANSACTION 
+                WHERE reference_id = colId
+                ) 
+            DO
+                IF ( colCondition.status <> 'DELETED' OR colCondition.status IS NULL OR colCondition.date ) 
+                THEN 
+                    --not matched condition save to unmatched table
+                END IF;
 
-
+            END FOR;
         END;
         COMMIT; 
     END LOOP;
