@@ -1,3 +1,8 @@
+-- excel file func
+https://www.excel-easy.com/examples/substring.html
+https://www.ablebits.com/office-addins-blog/excel-concatenate-strings-cells-columns/
+
+
 CREATE OR REPLACE PROCEDURE DeleteTable(tableName varchar2)
 IS
  v_counter number := 0;   
@@ -72,3 +77,7 @@ CREATE TABLE "VBCMS"."HK_CMS_FAC_TSPR"
   DROP TABLE "VBCMS"."HK_CMS_FAC_TSPR";
 
   --TEST done, successful create, delete
+
+  --if only DATA using this the BEST
+  create table HK_CMS_FAC_TSPR as select * from CMS_FAC_TSPR where rownum = -1;
+
