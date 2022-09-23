@@ -1,3 +1,99 @@
+-- COMPARE DATE TIME to a certain moment
+https://stackoverflow.com/questions/8544438/select-records-from-now-1-day
+https://stackoverflow.com/questions/10643379/how-do-i-query-for-all-dates-greater-than-a-certain-date-in-sql-server
+
+DateTime start1 = DateTime.Parse(txtDate.Text);
+
+select *  
+from dbo.March2010 A 
+where A.Date >= '2010-04-01'
+
+
+SELECT * 
+FROM dbo.March2010 A
+WHERE A.Date >= start1;
+
+
+SELECT * 
+FROM dbo.March2010 A
+WHERE A.Date >= '2010-04-01';
+
+
+SELECT * 
+FROM dbo.March2010 A
+WHERE A.Date >= CAST('2010-04-01' as Date);
+
+
+SELECT *  
+FROM dbo.March2010 A 
+WHERE A.Date >= Convert(datetime, '2010-04-01' )
+
+
+SELECT * FROM FOO
+WHERE MY_DATE_FIELD >= NOW() - INTERVAL 1 DAY
+
+
+Subtract 1 day from NOW()
+
+...WHERE DATE_FIELD >= DATE_SUB(NOW(), INTERVAL 1 DAY)
+Add 1 day from NOW()
+
+...WHERE DATE_FIELD >= DATE_ADD(NOW(), INTERVAL 1 DAY)
+
+-- == PL/SQL ORACLE
+-- https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_6009.htm
+-- https://www.techonthenet.com/oracle/procedures.php
+-- https://www.oracletutorial.com/plsql-tutorial/plsql-procedure/
+
+-- LOOP THROUGH A RESULT SET
+-- https://stackoverflow.com/questions/49635353/how-to-iterate-through-the-result-of-a-plsql-select
+-- http://www.java2s.com/Code/Oracle/PL-SQL/Useforlooptoloopthroughresultfromaselectstatement.htm
+
+BEGIN
+FOR item IN
+(Select table_name,column_name,num_rows  from all_tab_cols
+   join all_tables using (table_name)
+   where column_name = 'EmployeeId' and num_rows > 0)
+LOOP
+DBMS_OUTPUT.PUT_LINE
+(item.table_name || '    ' || item.column_name ||'    '||item.num_rows);
+END LOOP;
+END;
+
+BEGIN
+  FOR r IN (
+    SELECT a 
+    FROM table1 
+    WHERE b = c)
+  LOOP
+    FOR s IN (
+      SELECT d
+      FROM table2
+      WHERE d = a)
+    LOOP
+      NULL;
+    END LOOP;
+  END LOOP;
+END;
+
+DECLARE
+  a_array int_list;
+  d_array int_list;
+BEGIN
+  SELECT a
+  BULK COLLECT INTO a_array
+  FROM   table1
+  WHERE  b = c;
+
+  SELECT d
+  BULK COLLECT INTO d_array
+  FROM   Table2
+  WHERE  d MEMBER OF a_array;
+
+  FOR i IN 1 .. d_array.COUNT LOOP
+    NULL;
+  END LOOP;
+END;
 
 loop bassic
 -- https://www.oracletutorial.com/plsql-tutorial/plsql-loop/
@@ -150,9 +246,70 @@ DECLARE inPut VARCHAR2(4000) := @LIST_ID;
     END LOOP;
 END ;
 
-
+-- REPORT TABLE COL: HK_REPORT_COL_VALID_TO_DEL
 -- STEP2 COPY TO NEW TABLE STORE
+-- https://www.w3schools.com/sql/sql_insert_into_select.asp
+CREATE OR REPLACE PROCEDURE copyColAndCheckList 
+AS 
+BEGIN
+    FOR colId IN (
+        SELECT CMS_COLLATERAL_ID
+        FROM HK_REPORT_COL_VALID_TO_DEL 
+        WHERE reference_id = colId
+    ) 
+    LOOP 
+        -- CHECK COL CONDITION HERE : FROM TRANSACTION TABLE
+        BEGIN
+            -- INSERT INTO TABLE .... b SELECT * FROM .... o WHERE o.CMS_COLLATERAL_ID = colId ;
+
+        END;
+        COMMIT; 
+    END LOOP;
+    DBMS_OUTPUT.put_line ('Procedure Looping is done');
+END ;
 
 
+CREATE OR REPLACE PROCEDURE copyFac
+AS 
+BEGIN
+    FOR colId IN (
+        SELECT CMS_COLLATERAL_ID
+        FROM HK_REPORT_COL_VALID_TO_DEL 
+        WHERE reference_id = colId
+    ) LOOP 
+        BEGIN
+            
+        END;
+        COMMIT; 
+    END LOOP;
+END ;
 
 -- STEP3 DELETE FROM ORIGINAL TABLE
+CREATE OR REPLACE PROCEDURE deleteColAndCheckList
+AS 
+BEGIN
+    FOR colId IN (
+        SELECT CMS_COLLATERAL_ID
+        FROM HK_REPORT_COL_VALID_TO_DEL 
+    ) LOOP 
+        BEGIN
+            -- DELETE FROM .... a WHERE a.CMS_COLLATERAL_ID = colId
+        END;
+        COMMIT; 
+    END LOOP;
+END ;
+
+CREATE OR REPLACE PROCEDURE delFac
+AS 
+BEGIN
+    FOR colId IN (
+        SELECT CMS_COLLATERAL_ID AS id
+        FROM HK_REPORT_COL_VALID_TO_DEL 
+        WHERE reference_id = colId
+    ) LOOP 
+        BEGIN
+            
+        END;
+        COMMIT; 
+    END LOOP;
+END ;
