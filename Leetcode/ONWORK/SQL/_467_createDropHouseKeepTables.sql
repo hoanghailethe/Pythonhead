@@ -100,7 +100,7 @@ CREATE TABLE HK_STAGE_CHECKLIST_ITEM AS SELECT * FROM STAGE_CHECKLIST_ITEM WHERE
 CREATE TABLE HK_cms_stage_cust_doc AS SELECT * FROM cms_stage_cust_doc WHERE rownum = -1;
 CREATE TABLE HK_cms_stage_cust_doc_item AS SELECT * FROM cms_stage_cust_doc_item WHERE rownum = -1;
 CREATE TABLE HK_sci_lsp_appr_lmts		 AS SELECT * FROM sci_lsp_appr_lmts WHERE rownum = -1;
-CREATE TABLE HK_CMS_STG_FAC_MULTI_TIER_FINANCING	 AS SELECT * FROM sci_lsp_appr_lmts WHERE rownum = -1;
+
 
 --drop
 DROP TABLE HK_CMS_FACILITY_MASTER;
@@ -204,4 +204,3 @@ DROP TABLE HK_STAGE_CHECKLIST_ITEM;
 DROP TABLE HK_cms_stage_cust_doc;
 DROP TABLE HK_cms_stage_cust_doc_item;
 DROP TABLE HK_sci_lsp_appr_lmts;
-DROP TABLE HK_CMS_STG_FAC_MULTI_TIER_FINANCING
