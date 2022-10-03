@@ -5,6 +5,11 @@
 -- fix HOUSE_KEEP
 -- https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_6007.htm
 
+-- TEST 
+-- SELECT * FROM HK_cms_checklist ;
+-- SELECT * FROM hk_trans_history ;
+-- SELECT * FROM hk_transaction ;
+
 CREATE OR REPLACE TYPE NUMBER_ARRAY AS TABLE OF number(19);
 /
 create or replace PACKAGE HOUSE_KEEP AS
