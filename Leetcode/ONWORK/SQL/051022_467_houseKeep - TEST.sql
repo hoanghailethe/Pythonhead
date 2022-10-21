@@ -65,9 +65,9 @@ create or replace PACKAGE BODY "HOUSE_KEEP" AS
 
 	REPLICATE_FAC_RELATED_STG_REC(p_fac_ids);
 	REPLICATE_FAC_RELATED_REC(p_fac_ids);
-    DELETE_FAC_RELATED_STG_REC(p_fac_ids);
-    DELETE_FAC_RELATED_REC(p_fac_ids);
-    DELETE_FAC_REC(p_fac_ids);
+    -- DELETE_FAC_RELATED_STG_REC(p_fac_ids);
+    -- DELETE_FAC_RELATED_REC(p_fac_ids);
+    -- DELETE_FAC_REC(p_fac_ids);
 
 	REPLICATE_TRANSACTION_COL_RELATED_REC(p_col_ids);
 	REPLICATE_COL_RELATED_REC(p_col_ids);
