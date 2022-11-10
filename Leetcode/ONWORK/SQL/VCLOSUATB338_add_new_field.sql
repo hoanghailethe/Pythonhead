@@ -102,6 +102,8 @@ insert into stage_common_code_entry (
             and ccce.CATEGORY_CODE in ('APPROVAL_EXCEPTIONAL')
     );
 -- CLOS
+ALTER TABLE ADD APPROVAL_EXCEPTIONAL varchar(255);
+
 INSERT INTO COMMON_CODE_CATEGORY (
         CATEGORY_ID,
         CATEGORY_CODE,
@@ -133,3 +135,24 @@ VALUES (
         category_id
  FROM   common_code_category
  WHERE  category_code = 'APPROVAL_EXCEPTIONAL');
+
+
+--draft
+   <sql-query name="HQL.borrower.search.postCode" resultset-ref="postcode.result">
+    <![CDATA[  	
+		SELECT ENTRY_NAME AS CITY, REF_ENTRY_CODE AS STATE
+		FROM COMMON_CODE_CATEGORY_ENTRY
+    	WHERE CATEGORY_CODE = 'CITY'
+    	AND ENTRY_CODE= :postCode
+    ]]>
+    </sql-query>
+
+    (SELECT entry_name
+                            FROM   common_code_category_entry
+                            WHERE  category_code = 'FAC_RATE'
+                            AND entry_code = CFMTF.rate_num
+                            AND ref_entry_code = (SELECT lmt_crrncy_iso_code
+                                                    FROM   sci_lsp_appr_lmts
+                                                    WHERE  cms_lsp_appr_lmts_id = :cmsFacMasterId and rownum = 1)) as rate_num,
+
+                                                    
