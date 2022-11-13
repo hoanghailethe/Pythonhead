@@ -102,7 +102,7 @@ insert into stage_common_code_entry (
             and ccce.CATEGORY_CODE in ('APPROVAL_EXCEPTIONAL')
     );
 -- CLOS
-ALTER TABLE ADD APPROVAL_EXCEPTIONAL varchar(255);
+ALTER TABLE ADD APPROVAL_EXCEPTION varchar(255);
 
 INSERT INTO COMMON_CODE_CATEGORY (
         CATEGORY_ID,
@@ -121,15 +121,15 @@ VALUES (
  INSERT INTO common_code_category_entry
             (entry_id,
              entry_code,
-             ref_entry_code,
+            --  ref_entry_code,
              entry_name,
              active_status,
              category_code,
              category_code_id)
 (SELECT common_code_category_entry_seq.NEXTVAL,
-        'C99', -- ??
-        'MS601', --?? 
-        'STOCKS \& SHARES ETC', --?
+        'Ex1', -- ??
+        -- 'MS601', --?? 
+        'VIP CUS 1', --?
         '1', --?
         category_code,
         category_id
@@ -153,6 +153,72 @@ VALUES (
                             AND entry_code = CFMTF.rate_num
                             AND ref_entry_code = (SELECT lmt_crrncy_iso_code
                                                     FROM   sci_lsp_appr_lmts
-                                                    WHERE  cms_lsp_appr_lmts_id = :cmsFacMasterId and rownum = 1)) as rate_num,
+                                                    WHERE  cms_lsp_appr_lmts_id = :cmsFacMasterId and rownum = 1)) as rate_num ;
 
-                                                    
+-- TEST DATA LOCAL CLOS 1 
+
+ALTER TABLE SML_FACILITY ADD APPROVAL_EXCEPTION varchar(255);
+
+INSERT INTO COMMON_CODE_CATEGORY (
+        CATEGORY_ID,
+        CATEGORY_CODE,
+        CATEGORY_NAME,
+        CATEGORY_TYPE,
+        ACTIVE_STATUS
+    )
+VALUES (
+        COMMON_CODE_CATEGORY_SEQ.NEXTVAL,
+        'APPROVAL_EXCEPTIONAL',
+        'Approval Exceptional',
+        1,
+        'A'
+    );
+ INSERT INTO common_code_category_entry
+            (entry_id,
+             entry_code,
+            --  ref_entry_code,
+             entry_name,
+             active_status,
+             category_code,
+             category_code_id)
+(SELECT common_code_category_entry_seq.NEXTVAL,
+        'Ex1', -- ??
+        -- 'MS601', --?? 
+        'VIP CUS 1', --?
+        '1', --?
+        category_code,
+        category_id
+ FROM   common_code_category
+ WHERE  category_code = 'APPROVAL_EXCEPTIONAL');
+
+ INSERT INTO common_code_category_entry
+            (entry_id,
+             entry_code,
+            --  ref_entry_code,
+             entry_name,
+             active_status,
+             category_code,
+             category_code_id)
+(SELECT common_code_category_entry_seq.NEXTVAL,
+        'Ex2', -- ??
+        -- 'MS601', --?? 
+        'VIP CUS 2', --?
+        '1', --?
+        category_code,
+        category_id
+ FROM   common_code_category
+ WHERE  category_code = 'APPROVAL_EXCEPTIONAL');
+
+--grant pri
+GRANT
+  SELECT,
+  INSERT,
+  UPDATE,
+  DELETE
+ON
+  common_code_category_entry, COMMON_CODE_CATEGORY
+TO
+  vbclos;
+
+  --FAC id test CLOS
+  getProductSearchResultByFacId facId >>>>>>:201901310000001267
