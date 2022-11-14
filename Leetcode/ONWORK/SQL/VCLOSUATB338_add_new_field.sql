@@ -237,3 +237,11 @@ COMMIT;
 
 SELECT * FROM SML_FACILITY WHERE FAC_NO = 2022111400016097;
 --test done : GOOD
+
+--141122
+move to table credit decision
+OBCreditDecision
+SML_FAC_CRED_DECISION
+<many-to-one name="facility" column="FACILITY_ID"
+
+ALTER TABLE SML_FAC_CRED_DECISION ADD APPROVAL_EXCEPTION varchar(255); 
