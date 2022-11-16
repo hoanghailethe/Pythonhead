@@ -155,10 +155,7 @@ VALUES (
                                                     FROM   sci_lsp_appr_lmts
                                                     WHERE  cms_lsp_appr_lmts_id = :cmsFacMasterId and rownum = 1)) as rate_num ;
 
--- TEST DATA LOCAL CLOS 1 
-
-ALTER TABLE SML_FACILITY ADD APPROVAL_EXCEPTION varchar(255);
-
+--CLIMS
 INSERT INTO COMMON_CODE_CATEGORY (
         CATEGORY_ID,
         CATEGORY_CODE,
@@ -173,6 +170,7 @@ VALUES (
         1,
         'A'
     );
+    --INSERT SOME DUMMY NEW CODE DATA TO TEST 
  INSERT INTO common_code_category_entry
             (entry_id,
              entry_code,
@@ -182,10 +180,9 @@ VALUES (
              category_code,
              category_code_id)
 (SELECT common_code_category_entry_seq.NEXTVAL,
-        'Ex1', -- ??
-        -- 'MS601', --?? 
-        'VIP CUS 1', --?
-        '1', --?
+        'Ex1', 
+        'VIP CUS 1', 
+        '1', 
         category_code,
         category_id
  FROM   common_code_category
@@ -194,20 +191,38 @@ VALUES (
  INSERT INTO common_code_category_entry
             (entry_id,
              entry_code,
-            --  ref_entry_code,
              entry_name,
              active_status,
              category_code,
              category_code_id)
 (SELECT common_code_category_entry_seq.NEXTVAL,
-        'Ex2', -- ??
-        -- 'MS601', --?? 
-        'VIP CUS 2', --?
-        '1', --?
+        'Ex2', 
+        'VIP CUS 2', 
+        '1', 
         category_code,
         category_id
  FROM   common_code_category
  WHERE  category_code = 'APPROVAL_EXCEPTIONAL');
+ INSERT INTO common_code_category_entry
+            (entry_id,
+             entry_code,
+             entry_name,
+             active_status,
+             category_code,
+             category_code_id)
+(SELECT common_code_category_entry_seq.NEXTVAL,
+        'Ex3', 
+        'VIP CUS 3', 
+        '1', 
+        category_code,
+        category_id
+ FROM   common_code_category
+ WHERE  category_code = 'APPROVAL_EXCEPTIONAL');
+
+-- TEST DATA LOCAL CLOS 1 
+
+ALTER TABLE SML_FACILITY ADD APPROVAL_EXCEPTION varchar(255);
+
 
 --grant pri
 GRANT
