@@ -224,6 +224,7 @@ VALUES (
 ALTER TABLE SML_FACILITY ADD APPROVAL_EXCEPTION varchar(255);
 
 
+
 --grant pri
 GRANT
   SELECT,
@@ -269,4 +270,34 @@ ALTER TABLE SML_FAC_CRED_DECISION ADD APPROVAL_EXCEPTION varchar(255);
 
 -- ADD to AA SCREEN
 ALTER TABLE SML_AA_LIMIT_BANK_PROP ADD APPROVAL_EXCEPTION varchar(255);
+
+--11/17 / CMS fix again
+insert into stage_common_code_entry
+(stage_id, entry_id, entry_code, entry_name, active_status, category_code, category_code_id, entry_source, country, group_id,
+    ref_entry_code, staging_reference_id, is_new)
+(select COMM_CODE_ENTRY_STG_SEQ.nextval, ccce.ENTRY_ID, ccce.entry_code, ccce.entry_name, ccce.ACTIVE_STATUS, ccce.CATEGORY_CODE,
+    ccce.CATEGORY_CODE_ID, ccce.ENTRY_SOURCE, ccce.country, ccce.GROUP_ID, ccce.REF_ENTRY_CODE, ccce.CATEGORY_CODE_ID, 'Y'
+from common_code_category_entry ccce, common_code_category ccc
+where ccc.category_code = ccce.CATEGORY_CODE and ccce.CATEGORY_CODE in ('APPROVAL_EXCEPTIONAL'));
+
+INSERT INTO TRANSACTION 
+(TRANSACTION_ID, FROM_STATE, USER_ID, 
+TRANSACTION_TYPE, REFERENCE_ID, STATUS, 
+TEAM_ID, TRX_REFERENCE_ID, LEGAL_ID, 
+CUSTOMER_ID, LIMIT_PROFILE_ID, TEAM_TYPE_ID, 
+TO_GROUP_TYPE_ID, TO_GROUP_ID, TO_USER_ID
+)
+SELECT TS_FMT(CURRENT_TIMESTAMP, 'yyyymmdd') || lpad(TRX_SEQ.nextval,9,'0'),
+'PENDING_CREATE', -999999999, 
+'COMMON_CODE_TYPE', C.CATEGORY_ID, 'ACTIVE', 
+'?TEAMID' , -999999999,'-999999999',
+-999999999,-999999999, 2,
+TO_CHAR(-999999999),-999999999,-999999999
+FROM COMMON_CODE_CATEGORY C 
+WHERE CATEGORY_CODE in ('APPROVAL_EXCEPTIONAL');
+
+-- co ve proc update ở đây rùi
+CREATE OR REPLACE PROCEDURE proc_update_code_set_value
+AS
+BEGIN
 
