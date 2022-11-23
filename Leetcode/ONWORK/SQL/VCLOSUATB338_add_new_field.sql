@@ -3,14 +3,16 @@ INSERT INTO COMMON_CODE_CATEGORY (
         CATEGORY_CODE,
         CATEGORY_NAME,
         CATEGORY_TYPE,
-        ACTIVE_STATUS
+        ACTIVE_STATUS, 
+        VERSION_TIME
     )
 VALUES (
         COMMON_CODE_CATEGORY_SEQ.nextval,
         'APPROVAL_EXCEPTIONAL',
         'Approval Exceptional',
         2,
-        'A'
+        'A',
+        1
     );
 insert into common_code_category_entry (
         entry_id,  
@@ -20,18 +22,44 @@ insert into common_code_category_entry (
         active_status,
         country,
         category_code,
-        category_code_id
+        category_code_id,
+        VERSION_TIME
     )
 select common_code_category_entry_seq.nextval,
-    'APPROVAL_EXCEPTIONAL',
-    'Approval exceptional',
+    'VP1',
+    'VIP CUSTOMER 1',
     '1',
     'A',
     'VN',
     category_code,
-    category_id
+    category_id,
+    VERSION_TIME
 from common_code_category
 where category_code = 'APPROVAL_EXCEPTIONAL';
+
+insert into common_code_category_entry (
+        entry_id,  
+        entry_code,
+        entry_name,
+        locale_name1,
+        active_status,
+        country,
+        category_code,
+        category_code_id,
+        VERSION_TIME
+    )
+select common_code_category_entry_seq.nextval,
+    'VP2',
+    'VIP CUSTOMER 2',
+    '1',
+    'A',
+    'VN',
+    category_code,
+    category_id,
+    VERSION_TIME
+from common_code_category
+where category_code = 'APPROVAL_EXCEPTIONAL';
+
 --added 112122
 -- STAGING TABLE
 
