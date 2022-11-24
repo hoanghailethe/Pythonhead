@@ -444,4 +444,36 @@ COMMIT ;
 
 ALTER TABLE SML_FACILITY DROP COLUMN APPROVAL_EXCEPTION ;
 
+--241122
+ALTER TABLE STAGE_AA_PROFILE ADD APPROVAL_EXCEPTION varchar(255); 
+ALTER TABLE SCI_LSP_AA_PROFILE ADD APPROVAL_EXCEPTION varchar(255);
+
+
+SELECT * FROM STAGE_AA_PROFILE WHERE APPROVAL_EXCEPTION IS NOT NULL ;
+SELECT * FROM SCI_LSP_AA_PROFILE WHERE APPROVAL_EXCEPTION IS NOT NULL ;  
+
+
+SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE >= TRUNC(SYSDATE); --refference_id = 20221021000005926
+
+SELECT his.transaction_date ,aa.* 
+FROM STAGE_AA_PROFILE aa
+JOIN (
+    SELECT trans_history.staging_reference_id, trans_history.transaction_date FROM trans_history WHERE trans_history.reference_id = 20221021000005926
+) his 
+ON aa.cms_aa_id = his.staging_reference_id
+ORDER BY his.transaction_date
+; 
+
+-- conclude: save not successfull
+-- test 241122
+SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE >= TRUNC(SYSDATE); --refference_id = 20210929000005922
+
+SELECT * FROM SCI_LSP_AA_PROFILE WHERE cms_aa_id = 20210929000005922 ; 
+SELECT his.transaction_date ,aa.* 
+FROM STAGE_AA_PROFILE aa
+JOIN (
+    SELECT trans_history.staging_reference_id, trans_history.transaction_date FROM trans_history WHERE trans_history.reference_id = 20210929000005922
+) his 
+ON aa.cms_aa_id = his.staging_reference_id
+ORDER BY his.transaction_date ; 
 

@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.Collection;
+
 // https://stackoverflow.com/questions/57857855/could-not-find-or-load-main-class-vs-code
 
 public class mainClass {
@@ -110,6 +113,11 @@ public class mainClass {
         } else {
             System.out.println("Single digits");
         }
+
+        //test new CASTing Collection on 231122
+        String[] testarr = {"123", "!2412512" , "oki "} ;
+		Collection c = (Collection) Arrays.asList(testarr) ;
+		System.out.println(c);
     }
 
 
