@@ -478,3 +478,32 @@ JOIN (
 ON aa.cms_aa_id = his.staging_reference_id
 ORDER BY his.transaction_date ; 
 
+-- CMS TEST FAC SCREEN 291122
+ALTER TABLE CMS_FAC_ADDITIONAL ADD APPROVAL_EXCEPTION varchar(1000); 
+ALTER TABLE CMS_STG_FAC_ADDITIONAL ADD APPROVAL_EXCEPTION varchar(1000);
+
+-- find FAC with CAR/21/0001/00122/00009289   sec
+SELECT * FROM cms_limit_security_map ;
+
+SELECT * FROM CMS_FACILITY_MASTER ; 
+
+SELECT * FROM CMS_SECURITY; 
+
+SELECT * FROM cms_limit_security_map WHERE sci_las_bca_ref_num = 'CAR/21/0001/00122/00009292'; 
+-- CMS_LPS_APPR_LMTS_ID : 20210929000021973
+SELECT * FROM CMS_FACILITY_MASTER WHERE CMS_LSP_APPR_LMTS_ID = 20210929000021973 ; -- ID: 20210929000035058
+
+SELECT * FROM CMS_FAC_ADDITIONAL WHERE CMS_FAC_MASTER_ID =  20210929000035058 ; 
+
+UPDATE CMS_FAC_ADDITIONAL SET approval_exception = 'Ex1,Ex2' WHERE  CMS_FAC_MASTER_ID =  20210929000035058 ; 
+COMMIT ;
+
+SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE >= TRUNC(SYSDATE); --20210929000035058
+SELECT his.transaction_date ,f.* 
+FROM CMS_STG_FAC_ADDITIONAL f
+JOIN (
+    SELECT trans_history.staging_reference_id, trans_history.transaction_date FROM trans_history WHERE trans_history.reference_id = 20210929000035058
+) his 
+ON f.cms_fac_master_id = his.staging_reference_id
+ORDER BY his.transaction_date ;  
+-- approval exp : LM10,Ex1,Ex2,Ex4  - > success done done
