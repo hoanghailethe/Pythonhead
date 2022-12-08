@@ -1,0 +1,257 @@
+Index: src/com/integrosys/sml/los/app/common/picklist/PicklistDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/com/integrosys/sml/los/app/common/picklist/PicklistDAO.java	(revision 3182)
++++ src/com/integrosys/sml/los/app/common/picklist/PicklistDAO.java	(date 1670467815643)
+@@ -2,18 +2,17 @@
+ 
+ package com.integrosys.sml.los.app.common.picklist;
+ 
+-import java.util.ArrayList;
+-import java.util.HashMap;
+-import java.util.Iterator;
+-import java.util.List;
+-import java.util.Map;
++import java.time.LocalDateTime;
++import java.util.*;
+ 
++import org.apache.axis.collections.LRUMap;
+ import org.apache.struts.util.LabelValueBean;
+ import org.hibernate.Criteria;
+ import org.hibernate.Query;
+ import org.hibernate.Session;
+ import org.hibernate.criterion.Order;
+ import org.hibernate.criterion.Restrictions;
++import org.hibernate.stat.SessionStatistics;
+ import org.springframework.stereotype.Repository;
+ import org.springframework.transaction.annotation.Transactional;
+ 
+@@ -76,6 +75,8 @@
+ 		List queryList = new ArrayList();
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("com.integrosys.sml.los.app.common.picklist.PicklistDAO.getMonthPickList");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 	}
+@@ -86,6 +87,8 @@
+ 		List queryList = new ArrayList();
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("application.typelist");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 
+@@ -97,6 +100,8 @@
+ 		List queryList = new ArrayList();
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("branch.codelist");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 
+@@ -109,6 +114,8 @@
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.branch.by.centre");
+ 		q.setString("centretype", centretype);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 
+@@ -121,6 +128,8 @@
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.branchstructure.by.centre");
+ 		q.setString("centreType", centreType);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 	}
+@@ -131,6 +140,8 @@
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.available.branchstructure.by.centre");
+ 		q.setString("centreType", centreType);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 
+@@ -143,6 +154,8 @@
+ 		Query q = s.getNamedQuery("get.available.branchstructure.by.centre.with.headbranch");
+ 		q.setString("centreType", centreType);
+ 		q.setString("headBranchCode", headBranchCode);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 
+@@ -154,6 +167,8 @@
+ 		List queryList = new ArrayList();
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.available.branches.by.centre.type.and.branch");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		q.setString("branchCode", branchCode);
+ 		q.setString("centreType", centreType);
+ 		queryList = q.list();
+@@ -167,7 +182,9 @@
+ 
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.district.list.by.state");
+-		q.setString("state", state);			
++		q.setString("state", state);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		return q.list();
+ 
+ 	}
+@@ -176,6 +193,8 @@
+ 	public List  getDistrictList()throws BusinessException, Exception{
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.district.list");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 
+ 		return q.list();
+ 
+@@ -187,7 +206,9 @@
+ 
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.mukim.list.by.district");
+-		q.setString("district", district);			
++		q.setString("district", district);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		return q.list();
+ 
+ 	}
+@@ -196,6 +217,8 @@
+ 	public List  getMukimList()throws BusinessException, Exception{
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.mukim.list");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 
+ 		return q.list();
+ 
+@@ -205,7 +228,9 @@
+ 	public List  getMukimListByState(String state)throws BusinessException, Exception{
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.mukim.list.by.state");
+-		q.setString("state", state);			
++		q.setString("state", state);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		return q.list();
+ 	}
+ 
+@@ -214,7 +239,9 @@
+ 	public List  getUserAccessibleModuleList(String accessibleModule)throws BusinessException, Exception{
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.user.accessible.module");
+-		q.setString("accessibleModule", accessibleModule);			
++		q.setString("accessibleModule", accessibleModule);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		return q.list();
+ 	}	
+ 
+@@ -227,8 +254,17 @@
+ 		 }else{
+ 			q = s.getNamedQuery("get.user.accessible.module");
+ 		 }
+-		q.setString("accessibleModule", accessibleModule);			
+-		return q.list();
++		q.setCacheable(true);
++		q.setReadOnly(true);
++		q.setString("accessibleModule", accessibleModule);
++
++		List result = q.list();
++
++//		Session session = this.sessionFactory.getCurrentSession();
++//		SessionStatistics sessionStats = s.getStatistics();
++//		Statistics stats = this.sessionFactory.getStatistics();
++//		DefaultLogger.log(this, " Dem CACHE : " + SessionStatistics.getQu);
++		return result ;
+ 	}	
+ 	
+ 
+@@ -242,6 +278,8 @@
+ 			Query q = s.getNamedQuery("vehicleTypeList");
+ 			q.setString("category_code", vehicleType);
+ 
++			q.setCacheable(true);
++			q.setReadOnly(true);
+ 			List vehicleList = q.list();
+ 			ob = new OBCollateral[vehicleList.size()];			
+ 			if (vehicleList.size() > 0){
+@@ -266,6 +304,8 @@
+ 			Session s = super.getCurrentSession();
+ 			Query q = s.getNamedQuery("vehicleTypeList");
+ 			q.setString("category_code", vehicleType);
++			q.setCacheable(true);
++			q.setReadOnly(true);
+ 			list	=q.list();
+ 
+ 		}catch(Exception e){
+@@ -279,6 +319,8 @@
+ 	public List  getDealerListByDeveloper(String developer)throws BusinessException, Exception{
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.dealer.list.by.devloper");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		q.setString("developer", developer);			
+ 		return q.list();
+ 	}
+@@ -287,6 +329,8 @@
+ 	public List  getDealerList()throws BusinessException, Exception{
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("get.dealer.list");
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 
+ 		return q.list();
+ 
+@@ -332,6 +376,8 @@
+ 		q.setInteger("calculated_page_in", (IUIConstant.PAGINATION_PAGE_SIZE * currentPageNumber));
+ 		q.setString("dealerCode_in", dealerCode);
+ 		q.setString("dealerName_in", dealerName);
++		q.setCacheable(true);
++		q.setReadOnly(true);
+ 		queryList = q.list();
+ 		return queryList;
+ 	}
+@@ -360,7 +406,8 @@
+ 		query.setString("categoryCode", categoryCode);
+ 		if(refEntryCode != null && !"".equals(refEntryCode))
+ 			query.setString("refEntryCode", refEntryCode);
+-		
++		query.setCacheable(true);
++		query.setReadOnly(true);
+ 		return query.list();
+ 	}
+ 	
+@@ -493,7 +540,7 @@
+ 		List <LabelValueBean> commonList = new ArrayList <LabelValueBean> ();
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("getDisplayGenderValues");
+-		q.setCacheable(false);
++		q.setCacheable(true);
+ 		q.setReadOnly(true);
+         q.setCacheMode(org.hibernate.CacheMode.NORMAL);
+ 
+@@ -568,7 +615,7 @@
+ 		List <LabelValueBean> commonList = new ArrayList <LabelValueBean> ();
+ 		Session s = super.getCurrentSession();
+ 		Query q = s.getNamedQuery("getMailingAddressPreferences.SQL");
+-		q.setCacheable(false);
++		q.setCacheable(true);
+ 		q.setReadOnly(true);
+         q.setCacheMode(org.hibernate.CacheMode.NORMAL);
+ 

@@ -1,0 +1,41 @@
+Index: config/hibernate-mapping/picklist.hbm.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- config/hibernate-mapping/picklist.hbm.xml	(revision 3182)
++++ config/hibernate-mapping/picklist.hbm.xml	(date 1670461126791)
+@@ -485,7 +485,7 @@
+      ]]>
+     </sql-query>
+     
+-    <sql-query name="get.user.accessible.module" resultset-ref="CommonCodeCategoryEntry.List">
++    <sql-query name="get.user.accessible.module" resultset-ref="CommonCodeCategoryEntry.List" cache-region="get.user.accessible.module">
+    	 <![CDATA[
+ SELECT e1.ENTRY_ID AS ENTRY_ID,e1.ENTRY_CODE AS ENTRY_CODE,e2.ENTRY_NAME AS ENTRY_NAME
+ FROM COMMON_CODE_CATEGORY_ENTRY e1,COMMON_CODE_CATEGORY_ENTRY e2
+@@ -498,7 +498,7 @@
+      ]]>
+     </sql-query>
+     
+-    <sql-query name="get.user.accessible.module.other.lang" resultset-ref="CommonCodeCategoryEntry.List">
++    <sql-query name="get.user.accessible.module.other.lang" resultset-ref="CommonCodeCategoryEntry.List" cache-region="get.user.accessible.module.other.lang">
+    	 <![CDATA[
+ SELECT e1.ENTRY_ID AS ENTRY_ID,e1.ENTRY_CODE AS ENTRY_CODE,e2.ENTRY_NAME_2 AS ENTRY_NAME
+ FROM COMMON_CODE_CATEGORY_ENTRY e1,COMMON_CODE_CATEGORY_ENTRY e2
+@@ -556,7 +556,7 @@
+     	{ call OFFICER_PICKLIST(?, :page_in,:calculated_page_in,:record_per_page_in,:officerCode_in,:officerName_in) }
+     </sql-query>
+     
+-    <sql-query name="get.branchstructure.by.centre" resultset-ref="CommonCodeCategoryEntry.List">
++    <sql-query name="get.branchstructure.by.centre" resultset-ref="CommonCodeCategoryEntry.List" cache-region="get.branchstructure.by.centre">
+    	 <![CDATA[
+  				select 
+ 					hb.branch_num as entry_id,
+@@ -866,4 +866,4 @@
+ 		{ call SYNC_HOST_COMMON_CODE() }
+ 		]]>
+ 	</sql-query>
+-</hibernate-mapping>
+\ No newline at end of file
++</hibernate-mapping>

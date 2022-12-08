@@ -1,0 +1,97 @@
+Index: src/com/integrosys/sml/los/app/common/picklist/PicklistManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/com/integrosys/sml/los/app/common/picklist/PicklistManager.java	(revision 3182)
++++ src/com/integrosys/sml/los/app/common/picklist/PicklistManager.java	(date 1670469782725)
+@@ -1,8 +1,10 @@
+ package com.integrosys.sml.los.app.common.picklist;
+ 
++import java.time.LocalDateTime;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
++import org.apache.axis.collections.LRUMap;
+ import org.apache.struts.util.LabelValueBean;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.transaction.annotation.Propagation;
+@@ -12,13 +14,43 @@
+ import com.integrosys.sml.los.common.exception.BusinessException;
+ import com.integrosys.sml.los.ui.common.constant.IUIConstant;
+ 
+-@Transactional(propagation=Propagation.REQUIRED,rollbackFor = Throwable.class)
++//@Transactional(propagation=Propagation.REQUIRED,rollbackFor = Throwable.class)
++@Transactional(readOnly = true, propagation=Propagation.REQUIRED,rollbackFor = Throwable.class)
+ public class PicklistManager implements IPicklistManager, IUIConstant{
+-	public PicklistManager() { }
++	public PicklistManager() { cacheMap = new LRUMap(1000);}
+ 	@Autowired
+ 	protected IPicklistDAO picklistDAO;
++	public class CacheInformationObj {
++		private LocalDateTime expiredDate ;
++		private List object ;
++
++		public CacheInformationObj(List object) {
++			LocalDateTime todayDate = LocalDateTime.now();
++			expiredDate = todayDate.plusDays(1) ;
++			this.object = object ;
++		}
++
++		public LocalDateTime getExpiredDate() {
++			return expiredDate;
++		}
++
++		public void setExpiredDate(LocalDateTime expiredDate) {
++			this.expiredDate = expiredDate;
++		}
++
++		public List getObject() {
++			return object;
++		}
++
++		public void setObject(List object) {
++			this.object = object;
++		}
++	}
++
++	//cache
++	private LRUMap cacheMap = new LRUMap(1000);
+ 
+-	 /**
++	/**
+ 	    * Generic method for getDeveloperPickList 
+ 	    * @param int currentPageNumber, String developerCode, String developerName
+ 	    * @return list of developer results
+@@ -30,7 +62,22 @@
+ 	
+ 	public List getMonthPickList() throws BusinessException, Exception
+ 	{
+-		return picklistDAO.getMonthPickList();		
++		//		first cache
++		if (this.cacheMap.containsKey("getMonthPickList") ) {
++			CacheInformationObj c = (CacheInformationObj) cacheMap.get("getMonthPickList") ;
++			if (c.getExpiredDate().isBefore( LocalDateTime.now() )) {
++				return c.getObject() ;
++			} else {
++				//delete cache
++				cacheMap.remove("getMonthPickList") ;
++			}
++		}
++
++		List queryList = picklistDAO.getMonthPickList() ;
++		// put into cache
++		CacheInformationObj newCache = new CacheInformationObj( queryList ) ;
++		cacheMap.put("getMonthPickList", newCache );
++		return queryList;
+ 	}
+ 	
+ 	public List getApplicationTypeList() throws Exception 
+@@ -195,6 +242,7 @@
+ 	}
+ 
+ 	@Override
++	@Transactional
+ 	public void syncHostCommonCode() throws BusinessException, Exception {
+ 		picklistDAO.syncHostCommonCode();
+ 	}
