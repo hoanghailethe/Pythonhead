@@ -180,3 +180,64 @@ SELECT * FROM CMS_STAGE_PROPERTY WHERE cms_collateral_id IN (SELECT STAGING_REFE
 
 
 SELECT * FROM CMS_PROPERTY WHERE INDEPENDENT_VALUER_FLAG  IS NULL OR ABANDONED_PROJECT IS NULL ;
+
+-- 4/1/2023 TEST from RLOS - > CLIMS 
+--  SUM :
+--  This case error if collateral share with RLOS.
+--  
+-- step1: Create Collateral ID PT201608190004983822 from CRLOS, send succesful to clims
+-- step2: Go RLOS search this col to link with new fac on RLOS, send succesful to clims
+-- Check This coll on CLIMS, field "ABANDONED_PROJECT and INDEPENDENT_VALUER" was null
+SELECT * FROM CMS_SECURITY WHERE SECURITY_NO LIKE '%PT202210210000032445%';
+
+
+--5/1/23 -- TEST edit xml RLOS and CLOS
+    SELECT * FROM CMS_SECURITY WHERE SECURITY_NO LIKE '%PT202210210000032445%';     
+    --id : 20221021000030093	21-OCT-22				PT202210210000032445					old CLOS ID : 202210210000032445
+
+    For convient I will create new SECURITY ID that non existed before and test on that new SECURITY
+    -- BEFORE CLOS CREATE
+    SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202210210000032445' ; -- 1 record
+    SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032445' ; -- 0 REC
+    --AFTER CREATE
+    SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032445' ; -- 1 REC
+    -- CMS_ID : 20230105000030099	PT704
+    SELECT * FROM cms_property WHERE cms_collateral_id = '20230105000030099' ;
+    -- Abandon : Y    Indentifier: N
+
+    --RLOS CREATE
+    SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032446' ;
+    ID :
+    SELECT * FROM cms_property WHERE cms_collateral_id = '20230105000030101' ;
+    --SUCCESS : ABAN :N     INDEPEN : N
+
+    RLOS UPDATE: 
+    UPDATE cms_property SET ABANDONED_PROJECT ='Y', INDEPENDENT_VALUER_FLAG = 'Y' WHERE cms_collateral_id = '20230105000030101' ;
+
+     FAIL 1: RECREATE RLOS_ID : 202310210000032447
+     
+     SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032447';
+     20230105000030103	PT704	B?t d?ng s?n d? ?	B?t d?ng s?n	VN	VND	1500000000	VND	2000000000										122		O			PT20220826007376-NEW BV			202310210000032447		PT704	PT		VND		ACTIVE	1					VND		I	122				N	1002		26-AUG-13	26-OCT-13	S	Valuer Name 3				PT	05-JAN-23		RLOS		Y	0								N																																									HNO																NHA O	1	ct.linh		FMV		0.7		CG3		05-JAN-23				PT202210210000032477					12242
+
+     SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = '20230105000030103' ;
+     20230105000030103			Y		2	26-AUG-13	26-OCT-13	I	123		123	456		LO A	4	100.00	1	F						200	1											200000000		M	BAO DAM	DA DANG KY	DONG DA, HA NOI	N	N	N	TAP DOAN ABC		N				26-AUG-13								DU DIEU KIEN BAO DAM						009	C	NGUYEN VAN A	N						N			ABCDEF	DU AN ABC										0						001													10		CTY CP ABC	N	002	3	0	
+
+     SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = '20230105000030103' ;
+
+    UPDATE CMS_PROPERTY SET abandoned_project = 'Y' , independent_valuer_flag = 'Y' WHERE cms_collateral_id = '20230105000030103' ;
+    COMMIT ;
+
+    SELECT * FROM TRANSACTION tr WHERE tr.transaction_date > TRUNC(SYSDATE - 1);
+
+    SELECT * FROM CMS_STAGE_SECURITY where cms_collateral_id = 20230105000030104 ;
+    SELECT * FROM CMS_STAGE_PROPERTY WHERE cms_collateral_id IN (SELECT trans_history.staging_reference_id FROM trans_history WHERE trans_history.reference_id = '20230105000030103') ;
+
+
+    --RETETEST p2 
+    SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032450';
+SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = '20230105000030105' ;
+
+SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032452';
+SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = '20230105000030107' ;
+UPDATE CMS_PROPERTY SET abandoned_project = 'Y' , independent_valuer_flag = 'Y' WHERE cms_collateral_id = '20230105000030107' ;
+COMMIT ;
