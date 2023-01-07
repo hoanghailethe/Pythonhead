@@ -1,0 +1,1 @@
+call RLOSPRD.GLBATCH();
