@@ -234,10 +234,24 @@ SELECT * FROM CMS_SECURITY WHERE SECURITY_NO LIKE '%PT202210210000032445%';
 
 
     --RETETEST p2 
-    SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032450';
+SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032450';
 SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = '20230105000030105' ;
 
 SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032452';
 SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = '20230105000030107' ;
 UPDATE CMS_PROPERTY SET abandoned_project = 'Y' , independent_valuer_flag = 'Y' WHERE cms_collateral_id = '20230105000030107' ;
+COMMIT ;
+
+
+-- 17.1.23
+SELECT * FROM CMS_SECURITY WHERE los_security_dtl_id = '202310210000032500'; -- 20230117000030109
+SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = '20230117000030109' ; -- Aban: null , inde : null
+--success => test csa_maker : csamha01    submit
+-- change exist CAR COL to null - test validation when submit
+-- TEST 123	76945	CAR/21/0001/00122/00009289 
+-- CLOS	PT202109280000032423	Property - Vacant Land	-	2021092800016086	7013-Ban no CBL-TH-VND 	0	New	-	No
+SELECT * FROM CMS_SECURITY WHERE SECURITY_NO = 'PT202109280000032423'; -- colID: 20220725000030089
+SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = 20220725000030089;
+
+UPDATE CMS_PROPERTY SET abandoned_project = null , independent_valuer_flag = null WHERE cms_collateral_id = 20220725000030089;
 COMMIT ;
