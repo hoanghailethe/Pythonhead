@@ -1,6 +1,7 @@
 {
     "java.project.sourcePaths": [
+        "Leetcode/JAVA.Again",
         "Leetcode/JAVA Test CUSTOMER exeption",
-        "Leetcode/JAVA.Again"
+        "Leetcode/JAVA TEST POLIMOPHIMS"
     ]
 }
