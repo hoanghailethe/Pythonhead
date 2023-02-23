@@ -67,3 +67,21 @@ FROM LOS_USER A where A.id in (
 --        						obRuleApprovalDOA = ruleManager.findRuleApprovalDOA(20180921000710l);
 
 	
+SELECT ur.role_id, us.*
+        FROM LOS_USER us, LOS_USER_ROLE ur
+        WHERE us.id = ur.user_id AND ur.role_id =100;
+        
+        UPDATE COMMON_CODE_CATEGORY_ENTRY SET ref_entry_code = '200.201' WHERE ENTRY_CODE = 'CAD' AND category_code = 'APPROVE_AUTH';
+        COMMIT;
+        SELECT * FROM COMMON_CODE_CATEGORY_ENTRY WHERE ENTRY_CODE = 'CAD' ;   
+        ROLLBACK; 
+
+        
+        SELECT * FROM LOS_SECURITY ;
+          SELECT * FROM LOS_COLLATERAL  ;
+          
+          
+          SELECT * FROM LOS_COLL ;     -- PT20140313012944          20181205000471
+       SELECT * FROM LOS_CA WHERE ID = 20181205002208  ; --20181205002208   -- APP 12498PL18000598
+       
+       SELECT *FROM LOS_COLL_PT ; 
