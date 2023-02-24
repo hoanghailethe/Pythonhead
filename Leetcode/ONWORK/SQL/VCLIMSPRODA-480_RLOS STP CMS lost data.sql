@@ -37,6 +37,8 @@ Your Transaction ID is 20230223000255518
 -- done change CMS- RLOS on and pull
 
 
+
+
 SELECT * FROM TRANSACTION tr WHERE tr.transaction_date > TRUNC(SYSDATE) ;
 
 SELECT * FROM CMS_PROPERTY WHERE cms_collateral_id = 20140903002947915 ; 
@@ -48,3 +50,5 @@ SELECT * FROM CMS_STAGE_PROPERTY WHERE cms_collateral_id IN (SELECT STAGING_REFE
 
 
 -- COME to RLOS UI to SEE FIELD in CMS -> can EDIT or NOT
+--TEST DONE SUCCESS
+https://svn.integrosys.com/projects/vbcms/branches/CR2022
