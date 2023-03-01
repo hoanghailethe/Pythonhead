@@ -32,7 +32,35 @@ FROM COMMON_CODE_CATEGORY C
 WHERE CATEGORY_CODE in ('COLLATERAL_GROUP');
 --End 6
 
+-- co ve proc update ở đây rùi
+CREATE OR REPLACE PROCEDURE proc_update_code_set_value
+AS
+BEGIN
+== CLOS == get val from code_Set and code_value
+SELECT * FROM CODE_SET ;
+SELECT * FROM CODE_VALUE ;
+
+begin
+  proc_update_code_set_value();
+end;
+
 CommmonCodeEntryUpdateOperation
+
+src\com\integrosys\cms\app\transaction\CMSTransactionOracleDAO.java
+Search todo MAKER SYS 
+		String sql = this.getQuery(criteria, paramList, false);
+		DefaultLogger.info(this, sql);
+		DefaultLogger.info(this, "paramList: "+paramList);
+		try {
+			return (SearchResult) getJdbcTemplate().query(sql, paramList.toArray(), new ResultSetExtractor() {
+
+				public Object extractData(ResultSet rs) throws SQLException,
+						org.springframework.dao.DataAccessException {
+					return processTrxResultSet(criteria, rs, true, false);
+				}
+			});
+		}
+
 
 == SOLUTION ==
 
@@ -454,7 +482,9 @@ SELECT TS_FMT(CURRENT_TIMESTAMP, 'yyyymmdd') || lpad(TRX_SEQ.nextval,9,'0'),
 -999999999,-999999999, 2,
 TO_CHAR(-999999999),-999999999,-999999999
 FROM COMMON_CODE_CATEGORY C 
-WHERE CATEGORY_CODE in ('APPROVAL_EXCEPTIONAL');-- co ve proc update ở đây rùi
+WHERE CATEGORY_CODE in ('APPROVAL_EXCEPTIONAL');
+
+-- co ve proc update ở đây rùi
 CREATE OR REPLACE PROCEDURE proc_update_code_set_value
 AS
 BEGIN
