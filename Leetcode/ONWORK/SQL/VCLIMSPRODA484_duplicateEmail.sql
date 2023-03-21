@@ -98,6 +98,18 @@ INNER JOIN sml_trx st
 WHERE sffd.fp_folder_id IN (SELECT ID FROM SML_CA WHERE ca_number = 'CAR/23/9002/00862/05421158') 
 ORDER BY ca.id, st.last_update_date;
 
+sml_trx_history
+
+AND (trx.last_owner_id =? " 
+		+ "			or trx.originator_id=? " 
+		+ "			or trx.next_owner_id=? " 
+		+ "			or exists ( select id from SML_TRX_HISTORY trx_h " 
+		+ "						where trx_h.TRX_ID = trx.ID " 
+		+ "							and (trx_h.last_owner_id =? " 
+		+ "							or trx_h.originator_id=? " 
+		+ "							or trx_h.next_owner_id=?) ;
+
+
 
 --send to q
 -- SQL man hinh view RMTL

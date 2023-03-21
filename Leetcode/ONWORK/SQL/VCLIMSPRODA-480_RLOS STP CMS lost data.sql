@@ -52,3 +52,25 @@ SELECT * FROM CMS_STAGE_PROPERTY WHERE cms_collateral_id IN (SELECT STAGING_REFE
 -- COME to RLOS UI to SEE FIELD in CMS -> can EDIT or NOT
 --TEST DONE SUCCESS
 https://svn.integrosys.com/projects/vbcms/branches/CR2022
+
+
+-- RLOS
+
+SELECT * FROM LOS_CA ; 
+SELECT * FROM LOS_COLL ;
+--3001 Vehicle AB	AB102
+
+SELECT * FROM LOS_COLL WHERE sec_sub_typ_code = 'AB102' ;
+
+SELECT * FROM LOS_CA WHERE ID IN (SELECT CA_ID FROM LOS_COLL WHERE sec_sub_typ_code = 'AB102' ) ;
+
+-- APP REF : 12498MO18000031
+
+
+-- JS to add and select OPtion to UI valuerInGCMS
+let x= document.getElementById('approveExceptionList') ;
+let option1 = document.createElement("option");
+let option2 = document.createElement("option");
+option1.text = "Kiwi"; option1.value="NH TCB";option1.selected = 'selected';
+option2.text = "VipCus2"; option2.value="NH TCB2";option2.selected = 'selected';
+x.add(option1);x.add(option2);

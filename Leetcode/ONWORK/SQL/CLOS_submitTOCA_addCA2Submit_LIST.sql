@@ -1,3 +1,5 @@
+-- ADD CA TO SUBMIT
+
 SELECT 
       p.id, 
       p.cto_code ctocode, 
