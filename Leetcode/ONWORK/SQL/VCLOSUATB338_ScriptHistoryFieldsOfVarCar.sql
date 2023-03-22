@@ -62,27 +62,35 @@ SELECT * FROM sci_lsp_appr_lmts WHERE cms_lsp_appr_lmts_id IN (20221202000021981
 -- CAR/23/0001/00122/00009329
 
 --0 PASS TESTING
-SELECT cred_decision.APPROVAL_EXCEPTION as ap_exc, ca_var_history.ca_no, ca_var_history.caid
-    FROM SML_FACILITY fac
-    LEFT JOIN SML_FAC_CRED_DECISION cred_decision 
-        ON fac.id = cred_decision.facility_id
-    RIGHT JOIN (
-            SELECT ca.id as caid , ca.CA_NUMBER as ca_no
-            FROM SML_CA ca 
-            START WITH ca.CA_NUMBER = 'CAR/21/0001/00122/00009292' 
-            CONNECT BY PRIOR ca.INHERITED_CA_ID = ca.id AND ca.INTEGRATION_HOST_2 IS NOT NULL ) ca_var_history
-        ON ca_var_history.caid = fac.CA_ID 
-    ORDER BY ca_var_history.caid ASC ;
+SELECT 
+    cred_decision.APPROVAL_EXCEPTION as ap_exc, 
+    ca_var_history.ca_no, 
+    ca_var_history.caid
+FROM SML_FACILITY fac
+LEFT JOIN SML_FAC_CRED_DECISION cred_decision 
+    ON fac.id = cred_decision.facility_id
+RIGHT JOIN (
+        SELECT ca.id as caid , ca.CA_NUMBER as ca_no
+        FROM SML_CA ca 
+        START WITH ca.CA_NUMBER = 'CAR/21/0001/00122/00009292' 
+        CONNECT BY PRIOR ca.INHERITED_CA_ID = ca.id 
+        AND ca.INTEGRATION_HOST_2 IS NOT NULL ) ca_var_history
+    ON ca_var_history.caid = fac.CA_ID 
+ORDER BY ca_var_history.caid ASC ;
 
 
-    SELECT aa_limit.id, limit_prop.APPROVAL_EXCEPTION as ap_exc, ca_var_history.ca_no, ca_var_history.caid
-    FROM sml_aa_limit aa_limit
-    LEFT JOIN SML_AA_LIMIT_BANK_PROP limit_prop 
-        ON aa_limit.id = limit_prop.aa_limit_id
-    RIGHT JOIN (
-            SELECT ca.id as caid , ca.CA_NUMBER as ca_no
-            FROM SML_CA ca 
-            START WITH ca.CA_NUMBER = 'CAR/16/0001/00122/00007490' 
-            CONNECT BY PRIOR ca.INHERITED_CA_ID = ca.id AND ca.INTEGRATION_HOST_2 IS NOT NULL ) ca_var_history
-        ON ca_var_history.caid = aa_limit.ca_id
-    ORDER BY ca_var_history.caid ASC ;
+SELECT 
+    aa_limit.id, 
+    limit_prop.APPROVAL_EXCEPTION as ap_exc, 
+    ca_var_history.ca_no, ca_var_history.caid
+FROM sml_aa_limit aa_limit
+LEFT JOIN SML_AA_LIMIT_BANK_PROP limit_prop 
+    ON aa_limit.id = limit_prop.aa_limit_id
+RIGHT JOIN (
+        SELECT ca.id as caid , ca.CA_NUMBER as ca_no
+        FROM SML_CA ca 
+        START WITH ca.CA_NUMBER = 'CAR/16/0001/00122/00007490' 
+        CONNECT BY PRIOR ca.INHERITED_CA_ID = ca.id 
+        AND ca.INTEGRATION_HOST_2 IS NOT NULL ) ca_var_history
+    ON ca_var_history.caid = aa_limit.ca_id
+ORDER BY ca_var_history.caid ASC ;
