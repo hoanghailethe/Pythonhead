@@ -100,3 +100,59 @@ SELECT cms_collateral_id, los_security_dtl_id , SECURITY_NO  FROM CMS_SECURITY W
 Type of CAR *	Personal Loan  
 Application Number ^	CAR/23/0001/00122/00009331 
 
+-- 27/03     Find COL type AB102 AB 110 to copy in CLOS
+
+SELECT * FROM sml_collateral_group_map ;
+SELECT * FROM SML_SEC_TYPE ;
+SELECT * FROM SML_SEC_SUB_TYPE;
+
+ FROM (SELECT doc.id AS id,
+                                           doc.version_time AS version_time,
+                                           doc.app_typ AS app_type,
+                                           doc.los_fac_id AS los_fac_id,
+                                           doc.los_coll_id AS los_coll_id,
+                                           coll.source_security_sub_type AS coll_code,
+                                           (SELECT type_code
+                                              FROM sml_sec_type
+                                             WHERE id = coll.type_id)
+                                              AS sec_typ_code,
+                                           (SELECT subtype_code
+                                              FROM sml_sec_sub_type
+                                             WHERE id = coll.subtype_id)
+                                              AS sec_sub_typ_code,
+                                           coll.security_location AS country_code,
+                                           cou.ctr_cntry_name AS country_dscp
+                                      FROM    sml_doc doc
+                                           INNER JOIN
+                                                 sml_security coll
+
+AB102	Phương tiện vận tải	Phương tiện vận tải
+AB110	Vàng	Vàng	AB
+
+SELECT * FROM SML_SECURITY WHERE subtype_id = 10003 ORDER BY ID DESC;-- AB202005070000032321  VEHCLE
+SELECT * FROM SML_SECURITY WHERE subtype_id = 10006 ORDER BY ID DESC;-- --COLLATERAL_NO = AB201901230000030329         VANG
+
+SELECT * FROM SML_SECURITY ORDER BY ID DESC ;
+
+NEW COL
+202303270000032469      AB  - vehciel
+202303270000032468      AB   gold
+202303270000032467
+
+
+
+Type of CAR *	Credit Card  
+Application Number ^	CAR/23/0001/00122/00009327 
+
+-- FIND in CMS after STP ;
+SELECT * FROM CMS_SECURITY ORDER BY cms_collateral_id DESC;
+
+20230327000030132	AB102	Phuong ti?n v?n t?i	Ð?ng s?n	VN	VND	0	VND	100000000										122	31-DEC-49	O			COL1			202303270000032469		AB102	AB		VND		ACTIVE	1					VND		I	122				N	3001		01-MAY-20	01-AUG-20	S					AB	27-MAR-23		CLOS		N	0								N																																																									a	1	hungdv				0.1		CG3		27-MAR-23				AB202303270000032469					12230
+20230327000030130	AB110	Vàng	Ð?ng s?n	VN	VND	0	VND	100000000										122		O			123 AAAA			202303270000032468		AB110	AB		VND		ACTIVE	1					VND		I	122				N	6001		22-APR-19	22-JUN-19	S					AB	27-MAR-23		CLOS		N	0								N																																																									1	1	an.ph				0.03		CG3		27-MAR-23				AB202303270000032468					12230
+20230327000030128	AB110	Vàng	Ð?ng s?n	VN	VND	0	VND	1560000000										122		O			COLL 1 - TEST INTERFACE RLOS&CLIMS			202303270000032466		AB110	AB		VND		ACTIVE	1					VND		I	122				N	6002		22-JAN-19	22-MAR-19	S					AB	27-MAR-23		CLOS		N	0								N																																																									Coll 1 - Test Interface RLOS&CLIMS	1	minhntt				0.12		CG3		27-MAR-23				AB202303270000032466					12230
+
+
+-- RLOS VAR CHANGED TEST :
+search CMS : AB202303270000032469 , AB202303270000032468
+
+-- Work as wanted
