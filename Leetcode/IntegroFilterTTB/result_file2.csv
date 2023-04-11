@@ -1,0 +1,322 @@
+Filter data
+COLLECT from : Application_Form.xsl
+/document/application/applicationtype='MO'
+document/application/applicationtype='CC'
+/document/application/applicationtype='PL'
+document/application/facilitylist/facility/facilitycode='BP2'
+document/application/facilitylist/facility/facilitycode!='BP2'
+document/application/applicationreferenceno
+document/application/customer/hostcifno
+document/application/requestnature!='26'
+document/application/requestnaturedesc
+document/application/requestnature='26'
+count(document/application/jointcustomerlist/customer)
+document/application/applicationtype='MO' or document/application/applicationtype='PL'
+document/application/facilitylist/facility
+document/application/jointcustomerlist/customer/ccdetails/producttypedesc
+document/application/requestnature='17' or document/application/requestnature='18' or document/application/requestnature='27'
+document/application/customer/ccdetails/producttypedesc
+document/application/requestnature!='17' and document/application/requestnature!='18' and document/application/requestnature!='26' and document/application/requestnature!='27'
+document/application/customer/insidercodedesc
+document/application/customer/rmwealthflag
+(/document/application/applicationtype='MO') and (productcode!='HE07' and productcode!='HE08' and productcode!='HE09' and productcode!='HE10')
+(/document/application/applicationtype='MO') and (productcode='HE07' or productcode='HE08' or productcode='HE09' or productcode='HE10')
+document/application/facilitylist/facility/productcode='BP204'
+document/application/facilitylist/facility/existlimitformattedwithdecimal
+document/application/facilitylist/facility/limitappliedformattedwithdecimal
+document/application/customer/ccdetails/existcardcreditlimitformattedwithdecimal
+document/application/customer/ccdetails/newcreditlimitformattedwithdecimal
+document/application/requestnature='06' or document/application/requestnature='18'
+document/application/collaterallist/collateral/developercode='D119'
+document/application/collaterallist/collateral/developername
+(document/application/collaterallist/collateral/developercode!='D119' or document/application/collaterallist/collateral/developercode='')
+document/application/collaterallist/collateral/developercodedesc
+document/application/collaterallist/collateral/projectid='OTN001'
+document/application/collaterallist/collateral/projectname
+(document/application/collaterallist/collateral/projectid!='OTN001' or document/application/collaterallist/collateral/projectid='')
+document/application/collaterallist/collateral/projectiddesc
+document/application/collaterallist/collateral/securitysubtypecodedesc
+document/application/collaterallist/collateral/purchasepriceformattedwithdecimal
+document/application/collaterallist/collateral/resaddprovincedesc
+document/application/facilitylist/facility/productcode='RC01'
+document/application/requestnature!='17' and document/application/requestnature!='18' and document/application/requestnature!='27'
+document/application/customer/employmentstatus=01
+document/application/customer/employmentstatus!=01
+document/application/customer/employmentstatus=02
+document/application/customer/employmentstatus!=02
+document/application/customer/employmentstatus=03
+document/application/customer/employmentstatus!=03
+document/application/customer/idtype1desc
+document/application/customer/idno1
+document/application/customer/idissuectry1desc
+document/application/customer/issueddateformatted
+document/application/customer/lifetimeflag='Y'
+document/application/customer/lifetimeflag!='Y'
+document/application/customer/expirydateformatted
+document/application/customer/thaisalutationcodedesc
+document/application/customer/thainame
+document/application/customer/thaisurname
+document/application/customer/salutationcodedesc
+document/application/customer/nameline2
+document/application/customer/nameline1
+document/application/customer/maritalstatusdesc
+document/application/customer/birthdateformatted
+document/application/customer/placeofbirthdesc
+document/application/customer/nationalitydesc
+document/application/customer/nationality2desc
+document/application/customer/sourcefromcountrydesc
+document/application/customer/maritalstatus='M' or document/application/customer/maritalstatus='N'
+document/application/customer/mobileno
+document/application/customer/email
+/document/application/applicationtype='PL' or /document/application/applicationtype='CC'
+document/application/customer/emailstatementflag='Y'
+document/application/customer/emailstatementflag!='Y'
+document/application/customer/emailstatementflag='N'
+document/application/customer/emailstatementflag!='N'
+document/application/facilitylist/facility/productcode!='RC01'
+document/application/customer/mailingpreferencedesc
+document/application/customer/ccdetails/mailingpreferencedesc
+document/application/customer/addresslist/address
+../../../../../document/application/customer/registertelephoneno 
+../../../../../document/application/customer/registerexttelephoneno
+../../../../../document/application/customer/telephoneno
+../../../../../document/application/customer/exttelephoneno
+../../../../../document/application/customer/residenttypedesc
+../../../../../document/application/customer/employmenttelephoneno
+../../../../../document/application/customer/employmenttelephoneextno
+../../../../../document/application/customer/employmentfaxno
+document/application/customer/employmentoccupationdesc
+document/application/customer/employmentbiznaturedesc
+document/application/customer/professionalcodedesc
+document/application/customer/employmentyear
+document/application/customer/employmentmonth
+document/application/customer/contractemployedflag='Y'
+document/application/customer/contractempstartdateformatted
+document/application/customer/contractempenddateformatted
+document/application/customer/employmentname!=''
+document/application/customer/employmentname
+document/application/customer/currentemployercodedesc!=''
+document/application/customer/currentemployercodedesc
+document/application/customer/incomebasicsalaryformattedwithdecimal
+document/application/customer/incomeotherincomeformattedwithdecimal
+document/application/customer/bonusyearlyformattedwithdecimal
+document/application/customer/incomeextraotherformattedwithdecimal
+document/application/customer/incomesharedholderpercentformattedwithdecimal
+document/application/customer/incometotallastmthcreditacct1formattedwithdecimal
+document/application/customer/incometotallastmthcreditacct2formattedwithdecimal
+document/application/customer/incometypedesc
+document/application/customer/incomebankname
+document/application/customer/incomebankaccoutnumber
+document/application/facilitylist/facility/facilitycode!='RC'
+document/application/facilitylist/facility/disbbankcodedesc
+document/application/facilitylist/facility/disbaccountname
+document/application/facilitylist/facility/disbaccountnumber
+document/application/applicationtype='CC' or document/application/facilitylist/facility/facilitycode!='BP2'
+document/application/customer/ccdetails/paymentmethod=0
+document/application/customer/ccdetails/paymentmethod!=0
+document/application/facilitylist/facility/paymethod=0
+document/application/facilitylist/facility/paymethod!=0
+document/application/facilitylist/facility/facilitycode!='C2G'
+document/application/facilitylist/facility/facilitycode='C2G'
+document/application/customer/ccdetails/paymentmethod=1
+document/application/customer/ccdetails/paymentmethod!=1
+document/application/facilitylist/facility/paymethod=1
+document/application/facilitylist/facility/paymethod!=1
+document/application/customer/ccdetails/debitaccountno
+document/application/facilitylist/facility/payaccountnumber
+document/application/customer/ccdetails/debitaccountname
+document/application/facilitylist/facility/payaccountname
+document/application/applicationtype='CC' or document/application/facilitylist/facility/productcode='RC01'
+document/application/facilitylist/facility/paymethod=3
+document/application/facilitylist/facility/paymethod!=3
+document/application/customer/applywithccflag='Y'
+document/application/customer/applywithccflag!='Y'
+document/application/customer/applywithccflag='N'
+document/application/customer/applywithccflag!='N'
+(/document/application/applicationtype='MO') and (document/application/facilitylist/facility/productcode='HE07' or document/application/facilitylist/facility/productcode='HE08' or document/application/facilitylist/facility/productcode='HE09' or document/application/facilitylist/facility/productcode='HE10')
+document/application/facilitylist/facility/facilitycode='RC'
+document/application/facilitylist/facility/facilitycode='RC' or document/application/facilitylist/facility/facilitycode='C2G'
+document/application/facilitylist/facility/facilitycode='BP2' or document/application/facilitylist/facility/facilitycode='C2G'
+document/application/facilitylist/facility/productcode='RC02'
+document/application/applicationtype='MO' or document/application/applicationtype='CC'
+document/application/jointcustomerlist/customer
+../../../../document/application/applicationreferenceno
+../../../../document/application/requestnaturedesc
+../../../../document/application/customer/idtype1desc
+../../../../document/application/customer/idno1
+../../../../document/application/customer/ccdetails/existcardnumber
+../../../../document/application/customer/thaisalutationcodedesc
+../../../../document/application/customer/thainame
+../../../../document/application/customer/thaisurname
+../../../../document/application/customer/mobileno
+../../../../../../document/application/jointcustomerlist/customer/employmentfaxno
+document/application/bookbranchcodedesc
+document/application/bookbranchcode
+document/application/salesdesc
+document/application/salesstaffname
+document/application/salesstaffcode
+document/application/salescontactnumber
+document/application/referralstaffname
+document/application/referralstaffno
+document/application/customer/businesstypedesc
+document/application/customer/businesssubtypedesc
+document/application/customer/ccdetails/campaigncode
+document/application/customer/ccdetails/campaignname
+document/application/facilitylist/facility/cacampaigncode
+document/application/facilitylist/facility/campaignname
+COLLECT from : Appointment_Confirmation_Form.xsl
+document/xmlgenerationdate
+document/application/allapplicantname
+document/application/registrationrequestlist/registrationrequest/loancontractdatedesc
+document/application/registrationrequestlist/registrationrequest/mosigningdatedesc
+document/application/registrationrequestlist/registrationrequest/appointmenttimedesc
+document/application/registrationrequestlist/registrationrequest/landdepartmentbranchdesc
+document/application/registrationrequestlist/registrationrequest/landownername
+document/application/registrationrequestfacilitylist/registrationrequestfacility
+document/application/registrationrequestlist/registrationrequest/totalapprovedcreditlimitformattedwithdecimal
+document/application/registrationrequestlist/registrationrequest/totalmrtaamountformattedwithdecimal
+document/application/registrationrequestlist/registrationrequest/totaldutystampfeeamountformattedwithdecimal
+document/application/registrationrequestlist/registrationrequest/totalmortregistfeeamountformattedwithdecimal
+document/application/officernamegendoc
+document/application/officerphonegendoc
+COLLECT from : Benefit_Plus_Term_and_Condition.xsl
+COLLECT from : Cheque_Issuance_Form.xsl
+document/application/registrationrequestlist/registrationrequest/mcissueby
+document/application/registrationrequestlist/registrationrequest/mcissuebydesc
+document/application/registrationrequestlist/registrationrequest/mcissuedate
+document/application/registrationrequestlist/registrationrequest/mortgagesigningdate
+document/application/registrationrequestlist/registrationrequest/grandtotalamountformattedwithdecimal
+COLLECT from : Credit_Card_Cash_Card_Fee.xsl
+COLLECT from : Credit_Card_Fee.xsl
+COLLECT from : Fixing_Document_Cover_Page.xsl
+document/application/wfversion &gt; 1
+document/application/combotoapprefnodesc
+document/application/applicationstatus='1STRJ'
+document/application/applicationstatusdesc
+document/application/applicationstatus!='1STRJ'
+document/application/resubmitappno!=''
+document/application/resubmitappno
+document/application/reusedocreason
+document/application/resubmitappno=''
+document/application/customer/excludeincomedebtflagcount
+/document/application/applicationtype!='MO'
+document/application/customer/ccdetails
+document/application/applicationtype!='CC'
+document/application/customer/ccdetails/customersegmentdesc
+document/application/facilitylist/facility/customersegmentdesc
+document/application/facilitylist/facility/cbpurposecodedesc
+document/application/collaterallist/collateral/resaddtumbol = ''
+document/application/collaterallist/collateral/resaddamphur
+document/application/collaterallist/collateral/resaddtumbol != ''
+document/application/collaterallist/collateral/resaddtumbol
+document/application/facilitylist/facility/existingacctno != '' and document/application/facilitylist/facility/contractdatedesc = ''
+document/application/facilitylist/facility/existingacctno
+document/application/facilitylist/facility/existingacctno != '' and document/application/facilitylist/facility/contractdatedesc != ''
+document/application/facilitylist/facility/contractdatedesc
+document/application/facilitylist/facility/existingacctno = ''
+document/application/holderdate17!=''
+document/application/holderdate17
+document/application/holderdate17=''
+document/application/approveddate
+document/application/approvalmemo/approvedcreditlimit='0'
+document/application/branchname
+(/document/application/applicationtype='MO' and document/application/applicationstatus='1STAP')
+COLLECT from : NCB_Consent_Form.xsl
+document/application/customer/birthdate
+document/application/customer/idtype1='CI'
+document/application/customer/idno1_formatted
+document/application/customer/idtype1='PP'
+COLLECT from : Personal_Loan_Term_and_Condition.xsl
+COLLECT from : SB_Application_Form.xsl
+COLLECT from : SB_Appointment_Confirmation_Form.xsl
+document/application/registrationrequestlist/registrationrequest/totalfacinstallmentamountformattedwithdecimal
+/document/application/registrationrequestlist/registrationrequest/mlrrate!=''
+document/application/registrationrequestlist/registrationrequest/mlrrate
+/document/application/registrationrequestlist/registrationrequest/morrate!=''
+document/application/registrationrequestlist/registrationrequest/morrate
+/document/application/registrationrequestlist/registrationrequest/mrrrate!=''
+document/application/registrationrequestlist/registrationrequest/mrrrate
+/document/application/registrationrequestlist/registrationrequest/tdrate!=''
+document/application/registrationrequestlist/registrationrequest/tdrate
+COLLECT from : SB_Cheque_Issuance_Form.xsl
+document/application/sbbranchcode
+COLLECT from : SB_Fixing_Document_Cover_Page.xsl
+/document/application/applicationtype='SB'
+/document/application/applicationtype!='MO' and /document/application/applicationtype!='SB'
+(/document/application/applicationtype='SB' and (document/application/applicationstatus='1STAP' or document/application/applicationstatus='ARMMK'))
+COLLECT from : SB_NCB_Consent_Form.xsl
+COLLECT from : SL_Fixing_Document_Cover_Page.xsl
+document/application/applicationtype='PL'
+COLLECT from : SM_Appointment_Confirmation_Form.xsl
+COLLECT from : SM_Cheque_Issuance_Form.xsl
+COLLECT from : SM_HL_HE_Application_Form.xsl
+document/application/customer/genderdesc
+document/application/customer/issueddate
+document/application/customer/expirydate
+document/application/customer/age
+../../../../../document/application/customer/mobileno
+document/application/customer/sameregisteraddressflag='Y'
+document/application/customer/sameregisteraddressflag='N'
+document/application/customer/residenttypedesc
+document/application/customer/educationleveldesc
+document/application/customer/noofdependent
+document/application/customer/spsalutationcodedesc
+document/application/customer/spthainame
+document/application/customer/spthaisurname
+document/application/customer/spidtypedesc
+document/application/customer/spidno
+document/application/customer/spbirthdate
+document/application/customer/sourceofassetdesc
+document/application/customer/estimatedassetvaluedesc
+document/application/customer/employmentstatusdesc
+document/application/customer/currentjobtitle
+document/application/customer/employmentdept
+document/application/customer/employmentstaffid
+document/application/customer/empjointdatedesc
+document/application/customer/workingaddrcopyfrom='REGISTERED'
+document/application/customer/workingaddrcopyfrom='RESIDENCE'
+document/application/customer/workingaddrcopyfrom=''
+../../../../../document/application/customer/employmenttelephonedirectno
+document/application/collaterallist/collateral
+../../../../../../document/application/jointcustomerlist/customer/registertelephoneno
+../../../../../../document/application/jointcustomerlist/customer/registerexttelephoneno
+../../../../../../document/application/jointcustomerlist/customer/mobileno
+../../../../../../document/application/jointcustomerlist/customer/telephoneno
+../../../../../../document/application/jointcustomerlist/customer/employmenttelephoneno
+../../../../../../document/application/jointcustomerlist/customer/employmenttelephoneextno
+../../../../../../document/application/jointcustomerlist/customer/employmenttelephonedirectno
+count(document/application/jointcustomerlist/customer)=0
+count(document/application/jointcustomerlist/customer)=1
+document/application/jointcustomerlist/customer[1]/thaisalutationcodedesc
+document/application/jointcustomerlist/customer[1]/thainame
+document/application/jointcustomerlist/customer[1]/thaisurname
+count(document/application/jointcustomerlist/customer)=2
+document/application/jointcustomerlist/customer[2]/thaisalutationcodedesc
+document/application/jointcustomerlist/customer[2]/thainame
+document/application/jointcustomerlist/customer[2]/thaisurname
+document/application/customer/customerlevel
+COLLECT from : SP_NCB_Consent_Form.xsl
+COLLECT from : SP_New_staff_Application_Form.xsl
+document/application/branchcode
+document/application/facilitylist/facility/hostproductcode
+document/application/facilitylist/facility/hostprojectcode
+document/application/customer/racedesc
+../../../../../document/application/customer/mobilenotwo
+document/application/customer/employmentemail
+document/application/facilitylist/facility/tenure
+document/application/facilitylist/facility/mailingpreferencedesc
+document/application/facilitylist/facility/paymethoddesc
+COLLECT from : SP_New_staff_Loan_Agreement.xsl
+COLLECT from : SP_New_staff_Loan_Agreement_without_Duty_Stamp.xsl
+COLLECT from : SP_Old_staff_and_TMBCare_Staff_Application_Form.xsl
+document/application/facilitylist/facility/producttypedesc
+document/application/facilitylist/facility/hostAcfNo
+COLLECT from : SP_Old_staff_and_TMBCare_Topup_Agreement.xsl
+document/application/applicationdate
+document/application/customer/addresslist/address/addressline1
+document/application/customer/addresslist/address/road
+document/application/customer/addresslist/address/streetname
+document/application/customer/addresslist/address/tumbol
+document/application/customer/addresslist/address/amphur
+document/application/customer/addresslist/address/provincedesc
+COLLECT from : SP_Old_staff_and_TMBCare_Topup_Agreement_without_Duty_Stamp.xsl
