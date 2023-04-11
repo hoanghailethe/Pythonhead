@@ -11,6 +11,7 @@ directory = 'C:/Users/Victory/Downloads/docgen/docgen/data'
 result_strings = []
 
 CONTAIN_CHECK_STRING = "document/"
+EQUAL_CHAR = "="
 
 # iterate over files in
 # that directory
@@ -35,16 +36,21 @@ for filename in os.listdir(directory):
     
     # Check if strings matches the given criteria
     if CONTAIN_CHECK_STRING in strings[i]:
+      shortenStringRes = strings[i]
       
       # Print the strings to terminal
-      print(strings[i])
+      print(shortenStringRes)
+
+      #Eliminate equal value
+      if EQUAL_CHAR in shortenStringRes:
+        shortenStringRes = shortenStringRes[:shortenStringRes.find(EQUAL_CHAR)]
     
       # Append it to result list if not existed
-      if strings[i] not in result_strings:
-        result_strings.append(strings[i])
+      if shortenStringRes not in result_strings:
+        result_strings.append(shortenStringRes)
 
 # Set the output file name
-output_file_name = "D:/11.29.HH.moveLaptop/HHgithub/Pythonhead/Leetcode/IntegroFilterTTB/result_file2.csv"
+output_file_name = "D:/11.29.HH.moveLaptop/HHgithub/Pythonhead/Leetcode/IntegroFilterTTB/result_file3.csv"
 header = ['Filter data']
 # Open the output file in write mode
 with open(output_file_name, 'w', encoding='UTF8', newline='') as file:
