@@ -1,0 +1,51 @@
+
+
+
+UPDATE SCI_LE_SUB_PROFILE
+SET CMS_SUB_ORIG_ORGANISATION ='166' 
+WHERE cms_le_sub_profile_id  = (SELECT cms_customer_id FROM sci_lsp_lmt_profile WHERE los_bca_ref_num = 'CAR/22/9001/00166/05073008') ;
+COMMIT ;
+
+UPDATE SCI_LE_SUB_PROFILE
+SET CMS_SUB_ORIG_ORGANISATION ='166' 
+WHERE cms_le_sub_profile_id  = 20150515000077357 ;
+COMMIT ;
+
+
+
+--cMS 
+SELECT DISTINCT CMS_SUB_ORIG_ORGANISATION FROM SCI_LE_SUB_PROFILE ;
+SELECT COUNT(1) FROM SCI_LE_SUB_PROFILE WHERE CMS_SUB_ORIG_ORGANISATION LIKE '%--%' ;
+
+SELECT * FROM sci_lsp_lmt_profile WHERE los_bca_ref_num = 'CAR/22/9001/00166/05073008' 
+
+SELECT 
+FROM SCI_LE_SUB_PROFILE a , sci_lsp_lmt_profile b 
+WHERE b.cms_customer_id = a.cms_le_sub_profile_id 
+AND b.los_bca_ref_num = 'CAR/22/9001/00166/05073008'  ;
+
+SELECT COUNT(1) FROM SCI_LE_SUB_PROFILE WHERE CMS_SUB_ORIG_ORGANISATION LIKE '%--%' ;
+SELECT * FROM SCI_LE_SUB_PROFILE WHERE CMS_SUB_ORIG_ORGANISATION LIKE '%--%' ORDER BY cms_le_sub_profile_id DESC;
+
+SELECT * FROM COMMON_CODE_CATEGORY  WHERE category_id = 40 ;
+SELECT * FROM COMMON_CODE_CATEGORY  WHERE category_type= 40   ;
+SELECT * FROM COMMON_CODE_CATEGORY  WHERE category_name LIKE '%Branch%'   ;
+SELECT * FROM COMMON_CODE_CATEGORY  WHERE category_code LIKE '%Branch%'   ;
+
+SELECT * FROM COMMON_CODE_CATEGORY_ENTRY ;
+SELECT * FROM COMMON_CODE_CATEGORY_ENTRY WHERE CATEGORY_CODE = '40';
+
+-- CLOS
+SELECT * FROM sml_customer ;
+SELECT * FROM SML_CUSTOMER WHERE BRANCH_ID IS NULL ;
+
+select cv.code from code_value cv where cv.id = 112920 ;
+
+select cv.code from code_value cv where cv.code LIKE '%--%' ;
+
+
+SELECT * FROM SML_CUSTOMER WHERE CIF_NUMBER = '0000000000300036260';
+
+
+-- tìm customer bên clos là theo CIF_NUMBER trong bảng SML_CUSTOMER  
+-- cho bằng LLP_LE_ID trong sci_lsp_lmt_profile theo số CAR 
