@@ -104,7 +104,7 @@ AND
 b.cms_sub_orig_organisation  like '%--%' GROUP BY b.CMS_LE_SUB_PROFILE_ID; -- 5703   2955
 
 SELECT COUNT(1) FROM SCI_LE_SUB_PROFILE ; --3568
-SELECT COUNT(1) FROM SCI_LE_SUB_PROFILE WHERE cms_sub_orig_organisation like '%--%' ; --35
+SELECT COUNT(1) FROM SCI_LE_SUB_PROFILE WHERE cms_sub_ orig_organisation like '%--%' ; --35
 
 SELECT * FROM sci_lsp_lmt_profile WHERE cms_orig_organisation = '--';
 
@@ -161,7 +161,7 @@ b.cms_sub_orig_organisation  like '%--%' GROUP BY b.CMS_LE_SUB_PROFILE_ID; -- 57
 SELECT COUNT(1) FROM SCI_LE_SUB_PROFILE ; --3568
 SELECT COUNT(1) FROM SCI_LE_SUB_PROFILE WHERE cms_sub_orig_organisation like '%--%' ; --35
 
-SELECT * FROM sci_lsp_lmt_profile WHERE cms_orig_organisation = '--';
+-- SELECT * FROM sci_lsp_lmt_profile WHERE cms_orig_organisation = '--';
 
 SELECT * FROM cms_aa_pending_perfection WHERE cms_orig_organisation LIKE '%--%';
 
@@ -233,3 +233,8 @@ SELECT * FROM sci_le_sub_profile WHERE lsp_le_id = '400210934' ;
 
 SELECT  * FROM  SML_CUSTOMER WHERE CIF_NUMBER IN(3023911740,3022759952,3000825743,3023763635,2200281691,400505962);
 
+
+--CLOS 
+SELECT ID, BRANCH_ID FROM SML_CUSTOMER WHERE BRANCH_ID IS NULL ORDER BY ID DESC ;
+--CLIMS 
+SELECT cms_le_sub_profile_id,cms_sub_orig_organisation FROM SCI_LE_SUB_PROFILE WHERE cms_sub_orig_organisation like '%--%' OR cms_sub_orig_organisation IS NULL ORDER BY cms_le_sub_profile_id ;
