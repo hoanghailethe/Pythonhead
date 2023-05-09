@@ -235,6 +235,8 @@ SELECT  * FROM  SML_CUSTOMER WHERE CIF_NUMBER IN(3023911740,3022759952,300082574
 
 
 --CLOS 
-SELECT ID, BRANCH_ID FROM SML_CUSTOMER WHERE BRANCH_ID IS NULL ORDER BY ID DESC ;
+SELECT * FROM SML_CUSTOMER WHERE BRANCH_ID IS NULL ORDER BY ID DESC ;
 --CLIMS 
-SELECT cms_le_sub_profile_id,cms_sub_orig_organisation FROM SCI_LE_SUB_PROFILE WHERE cms_sub_orig_organisation like '%--%' OR cms_sub_orig_organisation IS NULL ORDER BY cms_le_sub_profile_id ;
+SELECT * FROM SCI_LE_SUB_PROFILE WHERE cms_sub_orig_organisation like '%--%' OR cms_sub_orig_organisation IS NULL ORDER BY cms_le_sub_profile_id ;
+
+

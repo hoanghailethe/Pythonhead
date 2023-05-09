@@ -3,7 +3,8 @@
         "Leetcode/JAVA.Again",
         "Leetcode/JAVA Test CUSTOMER exeption",
         "Leetcode/JAVA TEST POLIMOPHIMS",
-        "Leetcode/INTERVIEW"
+        "Leetcode/INTERVIEW",
+        "Leetcode/JAVA Test EXCEPTION HANDLE inheritence"
     ],
     "java.debug.settings.onBuildFailureProceed": true
 }

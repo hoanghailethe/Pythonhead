@@ -104,6 +104,15 @@ public class mainClass {
 
 
     public static void main(String[] args) {
+        String testArraySplit =  ",,,," ;
+
+        String[] arr = testArraySplit.split(",") ;
+
+        System.out.println(arr);
+        System.out.println(arr==null);
+        System.out.println(arr.length);
+
+
         Integer[] nums = {1,33,55 ,99} ;
         int average = Average(nums) ;
         System.out.println(average);
