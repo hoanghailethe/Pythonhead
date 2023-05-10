@@ -58,3 +58,14 @@ where trx.transaction_type = 'CUSTODIAN'
     and trx.status <> 'CLOSED'
     and trx.staging_reference_id = cust.CUSTODIAN_DOC_ID
     and cust.checklist_id = 20140523000012596;
+
+
+    -- CHANGE COL STATUS
+    buf.append("SELECT trx.from_state, sec.collateral_status col_status, sec.to_be_discharged_ind, ");
+		buf.append("trx.status, trx.reference_id, m.is_stp_ready, stp_trx.status stp_status ");
+		buf.append("FROM cms_security sec, transaction trx LEFT OUTER JOIN cms_stp_ready_status_map m ");
+		buf.append("ON trx.transaction_id = m.transaction_id ");
+		buf.append("LEFT OUTER JOIN stp_master_trans stp_trx ");
+		buf.append("ON trx.transaction_id = stp_trx.transaction_id ");
+		buf.append("WHERE trx.reference_id = sec.cms_collateral_id ");
+		buf.append("AND sec.cms_collateral_id ");
