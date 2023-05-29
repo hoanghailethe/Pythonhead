@@ -78,6 +78,7 @@ SELECT ID, REMARKS FROM LOS_CA WHERE APP_REF_NO = '94098CC19000192';
     INSERT INTO CMS_FUNCTION_ACCESS values (20230518000001 ,Trim('CAAction'), Trim('save_remark'), 109);
 	INSERT INTO CMS_FUNCTION_ACCESS values (20230518000002 ,Trim('CAAction'), Trim('save_remark'), 100);
 	INSERT INTO CMS_FUNCTION_ACCESS values (20230518000003 ,Trim('CAAction'), Trim('save_remark'), 101);
+	INSERT INTO CMS_FUNCTION_ACCESS values (20230518000004 ,Trim('CAAction'), Trim('save_remark'), 104);
 COMMIT ;
 
 12498CC23000033 AP REF NO
@@ -195,5 +196,68 @@ The application with Reference No : 12498CC23000034
 has been submitted to : Verifier 1
 29/05/2023 11:45:14
 
-	
+
+The application with Reference No : 12498PL23000002
+has been submitted to : BRANCH CHECKER
+
+The application with Reference No : 12498PL23000002
+has been submitted to : Rlos17
+29/05/2023 14:29:48
+
+-- CREATED COS LINH123
+SELECT * 
+FROM LOS_BRMS_UNDERWRITING_RESULT RSLT
+			        INNER JOIN 
+			        (
+			        	SELECT ID FROM LOS_BRMS_UNDERWRITING_PROD
+			            WHERE CA_ID = 20230529003368
+			            ORDER BY ID DESC
+					) PROD 
+					ON RSLT.UNDERWRITING_PROD_ID = PROD.ID
+					WHERE RSLT.RULE_NAME = 'Decision_Matrix_Final'
+		            AND ROWNUM = 1;
+                    
+                    
+                    SELECT CASE WHEN COUNT(DEVIATE.ID) > 0 THEN 'Y' ELSE 'N' END
+							FROM LOS_DEVIATION DEVIATE
+							WHERE DEVIATE.CA_ID = 20230529003368
+							AND DEVIATE.STATUS = 'ACTIVE' ;
+                            
+                            
+                            SELECT * FROM LOS_USER WHERE LOGIN_NAME = 'RLOS13' ; 
+                            
+                            
+                            SELECT * FROM COMMON_CODE_CATEGORY_ENTRY WHERE CATEGORY_CODE = 'APPROVE_AUTH'  AND ACTIVE_STATUS = 1 ;
+                            
+                            
+                            
+                            UPDATE COMMON_CODE_CATEGORY_ENTRY SET REF_ENTRY_CODE = '200,201,202,203' WHERE category_code = 'APPROVE_AUTH' AND entry_id = 20190129154939 ;
+                            COMMIT ;
+
+-- BC route to CO
+<option value="20180911000360">VTB.RLOS.18 - 12498 - CN BA DINH - HOI SO</option>
+
+The application with Reference No : 12498PL23000002
+has been submitted to : Nguyen Thanh Minh
+29/05/2023 15:18:36
+
+                            
+    SELECT * FROM LOS_USER WHERE SURNAME LIKE '%Nguyen Thanh Minh%'; 
+    --20180919000537	MINHBM		788DD582A3DF792CCA72849528F395D5A1529AED	minhbm			Nguyen Thanh Minh
+
+	UPDATE COMMON_CODE_CATEGORY_ENTRY SET REF_ENTRY_CODE = '200,201,202,203' WHERE category_code = 'APPROVE_AUTH' AND entry_id = 20190129154939 ;
+                            COMMIT ;
+                            
+                            
+    SELECT * FROM LOS_USER WHERE SURNAME LIKE '%Nguyen Thanh Minh%'; 
+    --20180919000537	MINHBM		788DD582A3DF792CCA72849528F395D5A1529AED	minhbm			Nguyen Thanh Minh
+    
+    SELECT * FROM LOS_USER_ROLE WHERE USER_ID = 20180919000537 ;
+    
+    SELECT * FROM LOS_USER u JOIN LOS_USER_ROLE r ON r.USER_ID = u.id and r.role_id = 104 and u.SURNAME LIKE '%Nguyen Thanh Minh%'; 
+	20180919000537	MINHBM
+
+
+
+
 
