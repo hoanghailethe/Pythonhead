@@ -146,4 +146,54 @@ The application with Reference No : 12498PL23000001
 has been submitted to : Verifier 1
 26/05/2023 20:00:27
 
+D:\Integro\Vietinbank\RLOS_newbranch\webapp\WEB-INF\classes\ilog\REQ_ORC_WF_FIRST_APPROVE-Config.xml
+<field>
+	<field-name>FieldCode</field-name>
+	<database-column>'Deviate Flag'</database-column>
+</field>
+<field>
+	<field-name>FieldValue</field-name>
+	<database-column>(
+		SELECT CASE WHEN COUNT(DEVIATE.ID) > 0 THEN 'Y' ELSE 'N' END
+		FROM LOS_DEVIATION DEVIATE
+		WHERE DEVIATE.CA_ID = $CA_ID$
+		AND DEVIATE.STATUS = 'ACTIVE'
+	)</database-column>
+</field>
+
+
+12498PL18000268 	DANG NGAN HA  	211660209 	21/09/2018 11:29:14	21/09/2018 11:34:49	At Branch Checker  	Hoang Linh 	- 	- 
+
+SELECT CASE WHEN COUNT(DEVIATE.ID) > 0 THEN 'Y' ELSE 'N' END
+		FROM LOS_DEVIATION DEVIATE
+		WHERE DEVIATE.CA_ID =20230517003364 
+		AND DEVIATE.STATUS = 'ACTIVE' ;
+        
+        
+        SELECT * FROM LOS_DEVIATION ;
+
+SELECT * FROM LOS_RULE_APPROVAL_DOA ;
+
+
+The application with Reference No : 12498CC23000034
+has been submitted to : BRANCH CHECKER
+29/05/2023 11:16:52
+
+1	12498CC23000034 	DO VAN THUONG  	008088000033 	29/05/2023 11:12:50	29/05/2023 11:16:50	At Branch Checker  	Rlos17 	- 	- 
+
+SELECT * FROM LOS_CA WHERE app_ref_no = '12498CC23000034' ;   --20180921000669
+SELECT * FROM LOS_RULE_APPROVAL_DOA WHERE CA_ID = 20180921000669 ;
+
+
+SELECT * FROM LOS_RULE_APPROVAL_DOA WHERE authority_group_1 = 'COS' ;
+--20190131001353	CA_ID (old) 20190131002611	AT1VR	COS	COS
+
+UPDATE LOS_RULE_APPROVAL_DOA SET CA_ID = 20230529003367 WHERE ID = 20190131001353 ;
+COMMIT ;
+
+The application with Reference No : 12498CC23000034
+has been submitted to : Verifier 1
+29/05/2023 11:45:14
+
+	
 
