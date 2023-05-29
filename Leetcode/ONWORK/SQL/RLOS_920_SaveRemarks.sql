@@ -132,3 +132,18 @@ has been submitted to : Verifier 1
     SELECT * FROM LOS_CA WHERE app_ref_no = '12498CC23000032' ;
     
 SELECT * FROM LOS_CIF_INDV WHERE CA_ID = 20230517003364 ; 
+
+
+cREATED NEW PERSONAL LOAN
+The application with Reference No : 12498PL23000001
+has been submitted to : BRANCH CHECKER
+26/05/2023 19:57:13
+
+RLOS69 -> 13
+	12498PL23000001 	DO VAN THUONG  	008088000033 	26/05/2023 19:48:25	26/05/2023 19:57:12	At Branch Checker  	Rlos17 	- 	- 
+
+The application with Reference No : 12498PL23000001
+has been submitted to : Verifier 1
+26/05/2023 20:00:27
+
+
