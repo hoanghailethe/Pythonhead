@@ -78,7 +78,9 @@ SELECT ID, REMARKS FROM LOS_CA WHERE APP_REF_NO = '94098CC19000192';
     INSERT INTO CMS_FUNCTION_ACCESS values (20230518000001 ,Trim('CAAction'), Trim('save_remark'), 109);
 	INSERT INTO CMS_FUNCTION_ACCESS values (20230518000002 ,Trim('CAAction'), Trim('save_remark'), 100);
 	INSERT INTO CMS_FUNCTION_ACCESS values (20230518000003 ,Trim('CAAction'), Trim('save_remark'), 101);
-	INSERT INTO CMS_FUNCTION_ACCESS values (20230518000004 ,Trim('CAAction'), Trim('save_remark'), 104);
+	INSERT INTO CMS_FUNCTION_ACCESS values (20230518000004 ,Trim('CAAction'), Trim('save_remark'), 104); -- BM
+INSERT INTO CMS_FUNCTION_ACCESS values (20230518000005 ,Trim('CAAction'), Trim('save_remark'), 203); --COS
+
 COMMIT ;
 
 12498CC23000033 AP REF NO
@@ -258,6 +260,18 @@ has been submitted to : Nguyen Thanh Minh
 	20180919000537	MINHBM
 
 
+The application with Reference No : 12498PL23000002
+has been submitted to : SYSTEM
+30/05/2023 11:03:21
 
 
+TEST auto routing
+12498PL23000002	DO VAN THUONG	Personal Loan	29/05/2023 14:10:36	30/05/2023 13:45:04	Pending Final Approved at Sub-Branch  	Hoang Linh Sub-branch
 
+SELECT * FROM LOS_USER WHERE SURNAME LIKE '%Hoang Linh Sub-branc%'; 
+20180911000360	VTB.RLOS.18		D30E2019CCB2171E07A4E979CB276827E7DB2D4F	VTB.RLOS.18			Hoang Linh Sub-branch
+
+
+The application with Reference No : 12498PL23000002
+has been submitted to : SYSTEM
+30/05/2023 14:13:42
