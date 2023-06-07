@@ -1451,3 +1451,7 @@ WHERE
             'APPROVAL_EXCEPTIONAL',
             'EXCEPTIONAL_APPROVAL_FACILITY','EXCEPTIONAL_APPROVAL_AA'
             ) ;
+
+
+select * from code_set where status = 'ACTIVE' and code = 'EXCEPTIONAL_APPROVAL_AA';
+select * from code_value where code_set_value_id = 155;
