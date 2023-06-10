@@ -217,7 +217,9 @@ protected Long getCompleteDueTime( String applicationStatus,String appType ) thr
 		return (OBSLA)q.uniqueResult();
 	}
 
-
+select ID, ENTRY_ID, APP_TYPE, APP_STATUS, DESCRIPTION, SLA_SEQ
+		   	from los_wf_status_sla ;
+			
 <sql-query name="actual.sla.with.application.type" resultset-ref="sla.application.type">
     <![CDATA[
     	SELECT
