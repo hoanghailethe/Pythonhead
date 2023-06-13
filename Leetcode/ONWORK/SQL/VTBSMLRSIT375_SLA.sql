@@ -267,5 +267,17 @@ SELECT to_char(COMPLETE_DUE_DATE, 'mm/dd/yyyy hh24:mi:ss') FROM LOS_WF_TASK WHER
 SELECT * FROM LOS_WF_TASK WHERE   APP_ID = '20230612003377';
 
 SELECT to_char(COMPLETE_DUE_DATE, 'mm/dd/yyyy hh24:mi:ss') FROM LOS_WF_TASK WHERE COMPLETE_DUE_DATE IS NOT NULL AND  APP_ID = '20230612003377';
-
+06/13/2023 13:11:03     
+NOW: 12h21p
 -- 12498CC23000036 	DO VAN THUONG  	008088000033 	12/06/2023 16:00:54	12/06/2023 16:06:28	At Branch Checker  	Rlos17 	- 	- 	Process
+
+
+        select * from los_wf_status_sla
+			where 
+            app_type ='CC' and 
+            app_status ='ABRCK' and 
+            SLA_SEQ is not null ;
+            
+            SELECT * FROM LOS_CA WHERE APP_REF_NO = '12498CC23000036';
+            SELECT * FROM LOS_WF_TASK WHERE   APP_ID = '20230612003377';
+-- TEST DONE - oki 50 minutes
