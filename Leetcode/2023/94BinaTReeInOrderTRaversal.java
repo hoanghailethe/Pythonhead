@@ -16,6 +16,13 @@ import java.util.List;
  * }
  */
 class Solution {
+//     Runtime4 ms
+// Beats
+// 5.59%
+// Memory
+// 41 MB
+// Beats
+// 45.35%
     public List<Integer> inorderTraversal(TreeNode root) {
         Queue<Integer    > intStack = new LinkedList<>(); 
         Stack<TreeNode > nodeStack = new Stack<>(); 
@@ -44,5 +51,19 @@ class Solution {
             res.add(intStack.poll());            
         }
         return res ;
+    }
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> nodes = new LinkedList<>();
+        
+        if (root == null) {
+            return nodes;
+        }
+
+        nodes.add(root.val);
+        nodes.addAll(preorderTraversal(root.left));
+        nodes.addAll(preorderTraversal(root.right));
+
+        return nodes;
     }
 }
