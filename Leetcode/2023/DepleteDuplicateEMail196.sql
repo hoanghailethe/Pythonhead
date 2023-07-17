@@ -24,5 +24,5 @@ where id not in (select id from (select min(id) as id  from Person
 
 # Write your MySQL query statement below
 select e.id,e.email from
-(select id,email,rank() over(partition by email order by id) as rnk from Person)e
+(select id,email,rank() over(p  order by id) as rnk from Person)e
 where e.rnk = 1 order by id; 
