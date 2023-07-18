@@ -32,19 +32,14 @@ class Solution {
 
         while(nodeStack.isEmpty()==false){
             TreeNode node = nodeStack.pop() ;
-            if(node!=null){
+  
+            if(node != null ) {
+                nodeStack.push(node.left) ;
                 System.out.println(node.val) ;
                 intStack.add(node.val) ;
-                if (node.right != null) {
-                    nodeStack.push(node.right); 
-                }
-
-                if(node.left!=null) {
-                    nodeStack.push(node.left) ;
-                }
-
+                            nodeStack.push(node.right); 
             }
-            
+
         }
 
         while(intStack.isEmpty() ==false) {
