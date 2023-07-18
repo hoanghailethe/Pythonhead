@@ -1,5 +1,15 @@
-public boolean canWinNim(int n) {
-        // 4n+3 -> n le la thua
-       return n%4 >= 1 && n%4 <= 3 && (n/4)%2 != 0 ;
+class Solution {
+
+    public boolean canWinNim(int n) {
+        boolean canWin = true ;
+        for(int i = 3; i <=n; )  {
+            if(canWin) i+= 1;
+            else i+=2 ;
+            canWin = !canWin ;
+        }
+        return canWin ;
 
     }
+
+//n = 1348820612    STACK OVER
+}
