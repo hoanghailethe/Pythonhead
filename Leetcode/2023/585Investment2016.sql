@@ -143,6 +143,7 @@ FROM (
         GROUP BY t1.lat, t1.lon HAVING COUNT(t1.lat) <2
     ) 
     GROUP BY tiv_2015
+    
 ) t; 
 
 Insurance =
@@ -160,3 +161,60 @@ Expected
 | tiv_2016 |
 | -------- |
 | 45       |
+
+SELECT ROUND (SUM(t.totalSame),2) as tiv_2016
+FROM (
+    SELECT i.tiv_2015, SUM(i.tiv_2016 ) as totalSame
+    FROM Insurance i
+    WHERE 
+    pid in 
+    (
+        SELECT t1.PID FROM 
+            (SELECT PID FROM INSURANCE GROUP BY tiv_2015 HAVING COUNT(tiv_2015) > 1 ) t1
+            JOIN
+            (SELECT PID FROM INSURANCE GROUP BY lat, lon HAVING COUNT(*) <2) t2
+            ON t1.PID = t2.PID
+    ) 
+    GROUP BY tiv_2015
+) t; 
+
+
+--soluion
+select
+    round(sum(tiv_2016), 2) as tiv_2016
+from
+    (
+        select
+            *
+            , count(*) over (partition by tiv_2015) as tiv_2015_cnt
+            , count(*) over (partition by lat, lon) as location_cnt
+        from
+            insurance
+    ) t -- every derived table must have its own alias
+where tiv_2015_cnt > 1 and location_cnt = 1 ;
+-- 1038ms
+-- Beats 73.77%of users with MySQL
+
+SELECT
+    ROUND(SUM(insurance.TIV_2016),2) AS TIV_2016
+FROM
+    insurance
+WHERE
+    insurance.TIV_2015 IN
+    (
+      SELECT
+        TIV_2015
+      FROM
+        insurance
+      GROUP BY TIV_2015
+      HAVING COUNT(*) > 1
+    )
+    AND CONCAT(LAT, LON) IN
+    (
+      SELECT
+        CONCAT(LAT, LON)
+      FROM
+        insurance
+      GROUP BY LAT , LON
+      HAVING COUNT(*) = 1
+    ) ;
