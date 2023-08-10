@@ -54,9 +54,7 @@ public class 521LongestUncomSubseq {
                     iterator.remove();
                 }
             }
-            for(int ind: runingPos ) {
-                if(ind<minPrevInd)runingPos.remove(ind) ;
-            }
+            
             runingPosSeq=runingPos ;
 
             if(runingPosSeq.isEmpty()) return false ;
