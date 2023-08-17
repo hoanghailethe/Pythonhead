@@ -2,7 +2,7 @@
 Select
     p.product_id,
     t.change_date,
-    IF(t.product_id IS null, '10', p.new_price) as price
+    IF(t.product_id IS null, 10, p.new_price) as price
 from
     (
         SELECT

@@ -13,10 +13,10 @@ public class 724FindPivotInd {
         return -1 ;
     }
 
-    1ms
-Beats 99.67%of users with Java
-Memory
-Details
-43.81mb
-Beats 88.92%of users with Java
+//     1ms
+// Beats 99.67%of users with Java
+// Memory
+// Details
+// 43.81mb
+// Beats 88.92%of users with Java
 }
