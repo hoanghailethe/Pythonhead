@@ -11,7 +11,7 @@ class Solution {
             // System.out.print(w+ " ");
             int[] chkClone = checkLot.clone() ; 
 
-            for(char c :w.toLowerCase().toCharArray()) {
+            for(char c :w.toLowerCase().toCharArray()) { 
                 if(c>='a'&& c<='z')chkClone[c]--;
             }
 
