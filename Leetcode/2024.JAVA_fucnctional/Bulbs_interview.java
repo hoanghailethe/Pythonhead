@@ -10,7 +10,7 @@ public class Bulbs_interview {
         List <Integer> bulbsList = Arrays.asList(bulbs) ;
         
         int count = 0;
-        IntStream().range( 0, bulbsList.size() )
+        IntStream.range( 0, bulbsList.size() )
             .forEach(
                 i -> {
                     int bulbRank = bulbsList.get(i) ;
