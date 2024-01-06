@@ -78,7 +78,8 @@ class Result {
                             subArrSplit( ar.subList( i+1, ar.size() ) , sum/2 ) 
                         ); 
                     }
-                    if( accSum > sum/2 ) return 0 ;
+                    // if( accSum > sum/2 ) return 0 ;
+                    //cant return and break forEACH loop
                 }
             );
 
