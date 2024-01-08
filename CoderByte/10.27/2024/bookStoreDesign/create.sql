@@ -1,0 +1,69 @@
+CREATE TABLE AUTHORS(
+    AuthorID INT AUTO_INCREMENT PRIMARY KEY,
+    AuthorName VARCHAR(50) NOT NULL,
+    DateOfBirth DATETIME,
+    PasswordHashed  VARCHAR(255)    NOT NULL ,
+    Email   VARCHAR(50) NOT NULL    UNIQUE,
+    Address     TEXT
+);
+
+CREATE TABLE CATEGORIES(
+    CategoryID  INT AUTO_INCREMENT  PRIMARY KEY,
+    CategoryName    VARCHAR(50)     NOT NULL
+);
+
+CREATE TABLE USERS(
+    UserID  INT AUTO_INCREMENT  PRIMARY KEY,
+    Username    VARCHAR(50)     NOT NULL    UNIQUE,
+    Email   VARCHAR(50) NOT NULL    UNIQUE,
+    PasswordHashed  VARCHAR(255)    NOT NULL,
+    AddressHome     TEXT ,
+    Phone   VARCHAR(15),
+    DateCreated DATETIME
+)
+
+CREATE TABLE BOOKS (
+    BookID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(100) NOT NULL,
+    AuthorID INT,
+    CategoryID INT,
+    StockQuantity INT DEFAULT 0,
+    Price DECIMAL(20, 5),
+    FOREIGN KEY (AuthorID) REFERENCES AUTHORS(AuthorID),
+    FOREIGN KEY(CategoryID) REFERENCES CATEGORIES(CategoryID)
+);
+
+CREATE TABLE ORDERS(
+    OrderID     INT AUTO_INCREMENT  PRIMARY KEY,
+    UserID  INT NOT NULL,
+    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PromotionCode   VARCHAR(20),
+    OrderStatus     VARCHAR(10) ,
+    Discount    DECIMAL(20,5),
+    TotalPrice  DECIMAL(20,5) NOT NULL ,
+    FOREIGN KEY (UserID) REFERENCES USERS(UserID)
+);
+
+CREATE TABLE ORDERLINES(
+    OrderlineID     INT     AUTO_INCREMENT  PRIMARY KEY,
+    BookID  INT   ,
+    OrderID INT      ,
+    Quantity  INT   NOT NULL ,
+    CurrentPrice INT NOT NULL ,
+    TotalPrice DECIMAL(20,5) ,
+    FOREIGN KEY (BookID) REFERENCES BOOKS(BookID),
+    FOREIGN KEY(OrderID)REFERENCES ORDERS(OrderID)
+);
+
+CREATE TABLE PAYMENTS(
+    PaymentID   INT AUTO_INCREMENT PRIMARY KEY,
+    OrderID     INT ,
+    Amount     DECIMAL(20,5)  ,
+    Date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (OrderID) REFERENCES ORDERS(OrderID)
+)
+
+
+--INDEXING
+CREATE INDEX indx_users_email ON USERS(Email) ;
+CREATE INDEX indx_orders_user_date ON USERS(UserID, DateCreated) ;
