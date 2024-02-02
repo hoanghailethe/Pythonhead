@@ -6,5 +6,10 @@
         "Leetcode/INTERVIEW",
         "Leetcode/JAVA Test EXCEPTION HANDLE inheritence"
     ],
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    
+    "gopls": {
+        "ui.semanticTokens": true
+    }
+      
 }

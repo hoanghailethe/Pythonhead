@@ -11,3 +11,7 @@ nina
 DOC tut 
 https://go.dev/doc/
 https://go.dev/doc/tutorial/getting-started
+
+
+ADS
+https://createstudio.com/yt/special?utm_medium=cpc&utm_source=youtube&utm_campaign=20983474772&utm_content=689448725936&gclid=CjwKCAiA_OetBhAtEiwAPTeQZ1G3R_m8UmwwpuGKQPWkHIplSj9zJwnIoVkqxPK1z_Q76ZY18G0rzhoClf4QAvD_BwE
