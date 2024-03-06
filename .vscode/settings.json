@@ -10,6 +10,8 @@
     
     "gopls": {
         "ui.semanticTokens": true
-    }
+    },
+    "cody.autocomplete.advanced.accessToken": "sgp_a0d7ccb4f752ea73_67dbc00cceb0e1fb04124697d0b8c0d8c450e97a",
+    "cody.autocomplete.advanced.provider": "anthropic"
       
 }
